@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Add any necessary configuration here
+  swcMinify: false,
+  compiler: {
+    // Disable SWC as fallback
+    styledComponents: true
+  }
 }
 
 module.exports = nextConfig 
