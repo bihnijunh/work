@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  swcMinify: false,
-  // Disable Turbopack since it requires SWC
-  experimental: {
-    turbopack: false
-  }
+  // Add any necessary configuration here
 }
 
 module.exports = nextConfig 

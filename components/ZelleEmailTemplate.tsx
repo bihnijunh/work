@@ -1,4 +1,5 @@
 import { ZelleEmailContent } from "@/types/email";
+import Image from 'next/image';
 
 interface ZelleEmailTemplateProps {
   content: ZelleEmailContent;
@@ -9,9 +10,11 @@ export function ZelleEmailTemplate({ content }: ZelleEmailTemplateProps) {
     <div className="border dark:border-gray-700 rounded-lg overflow-hidden">
       {/* Header with Zelle Logo */}
       <div className="bg-[#6D1ED4] p-5 text-center">
-        <img 
+        <Image 
           src="https://www.zellepay.com/sites/default/files/Zelle-logo-tagline-horizontal-white-v2_1_0.png"
           alt="Zelle" 
+          width={200}
+          height={32}
           className="h-8 mx-auto"
         />
       </div>
@@ -45,7 +48,7 @@ export function ZelleEmailTemplate({ content }: ZelleEmailTemplateProps) {
               </a>
             </p>
             <p className="text-xs">
-              *We don't sell data. However, we do share data for cross context behavioral advertising. 
+              *We don&apos;t sell data. However, we do share data for cross context behavioral advertising. 
               You can opt out by clicking the link above.
             </p>
             <p className="text-xs mt-4">

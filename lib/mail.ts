@@ -1,7 +1,5 @@
 import { ZelleEmailContent, PaypalEmailContent } from '@/types/email';
 import { Resend } from "resend";
-import { ZelleEmailTemplate } from '@/components/ZelleEmailTemplate';
-import { PaypalEmailTemplate } from '@/components/PaypalEmailTemplate';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

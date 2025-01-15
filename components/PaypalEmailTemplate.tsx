@@ -1,5 +1,6 @@
 import React from 'react';
 import { PaypalEmailContent } from "@/types/email";
+import Image from 'next/image';
 
 interface PaypalEmailTemplateProps {
   content: PaypalEmailContent;
@@ -17,10 +18,11 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
 
       {/* PayPal Logo */}
       <div style={{ padding: '16px' }}>
-        <img 
+        <Image 
           src="https://www.paypalobjects.com/digitalassets/c/system-triggered-email/n/layout/images/paypal-rebranding/pp-logo-in-circle-2x.png"
           alt="PayPal"
-          style={{ width: '63px', height: '63px' }}
+          width={63}
+          height={63}
         />
       </div>
 
@@ -56,17 +58,18 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
       {/* Footer */}
       <div style={{ borderTop: '1px solid #e5e7eb' }}>
         <div style={{ padding: '16px' }}>
-          <img 
+          <Image 
             src="https://www.paypalobjects.com/digitalassets/c/system-triggered-email/n/layout/images/paypal-rebranding/footer-logo-with-crop-2x.png"
             alt="PayPal"
-            style={{ width: '283px', height: '100px' }}
+            width={283}
+            height={100}
           />
         </div>
 
         {/* Footer Links */}
         <div style={{ padding: '8px 32px', fontSize: '12px', fontWeight: 500 }}>
           <div style={{ display: 'flex', gap: '16px', color: '#0070e0' }}>
-            <a href="#" style={{ color: '#0070e0', textDecoration: 'none' }}>Help & Contact</a>
+            <a href="#" style={{ color: '#0070e0', textDecoration: 'none' }}>Help &amp; Contact</a>
             <span style={{ color: '#9ca3af' }}>|</span>
             <a href="#" style={{ color: '#0070e0', textDecoration: 'none' }}>Security</a>
             <span style={{ color: '#9ca3af' }}>|</span>
@@ -83,9 +86,9 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
             </a>
           </p>
           <p style={{ marginBottom: '16px' }}>
-            Please don't reply to this email. To get in touch with us, click 
+            Please don&apos;t reply to this email. To get in touch with us, click 
             <a href="#" style={{ color: '#0070e0', textDecoration: 'none', marginLeft: '4px' }}>
-              Help & Contact
+              Help &amp; Contact
             </a>.
           </p>
           <p style={{ marginBottom: '16px' }}>
