@@ -1,30 +1,37 @@
 "use server";
 
 import { sendZelle, sendPaypal } from "@/lib/mail";
-import { ZelleEmailContent, PaypalEmailContent } from "@/types/email";
+import { ZelleEmailContent, PaypalEmailContent, ZelleAdditionalPaymentContent } from "@/types/email";
 
-export async function sendEmail(email: string, emailContent: ZelleEmailContent | PaypalEmailContent) {
-  console.log("Server action called with:", { email, emailContent });
-  
+export async function sendEmail(email: string, emailContent: ZelleEmailContent | PaypalEmailContent | ZelleAdditionalPaymentContent) {
+  if (!email) {
+    return { success: false, error: "Email address is required" };
+  }
+
+  if (!emailContent) {
+    return { success: false, error: "Email content is required" };
+  }
+
   try {
-    console.log("Attempting to send email...");
+    let result;
+    
     if ('statusText' in emailContent) {
-      // This is a Zelle email
-      await sendZelle(email, emailContent);
+      // This is a Zelle email (either standard or additional payment)
+      result = await sendZelle(email, emailContent);
     } else {
       // This is a PayPal email
-      await sendPaypal(email, emailContent);
+      result = await sendPaypal(email, emailContent);
     }
 
-    console.log("Email sent successfully");
-    return { success: true };
-  } catch (error) {
-    console.error("Error in server action:", error);
-    if (error instanceof Error) {
-      console.error("Error name:", error.name);
-      console.error("Error message:", error.message);
-      console.error("Error stack:", error.stack);
+    if (!result.success) {
+      return { success: false, error: result.error || "Failed to send email" };
     }
-    return { success: false, error: error instanceof Error ? error.message : "Failed to send email" };
+
+    return { success: true, data: result.data };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
+    }
+    return { success: false, error: "An unexpected error occurred" };
   }
-} 
+}

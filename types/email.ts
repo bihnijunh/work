@@ -7,6 +7,45 @@ export interface ZelleEmailContent {
   supportNumber: string;
   toEmail: string;
   fromEmail: string;
+  emailTitle?: string;  // Optional email title
+}
+
+export interface ZelleAdditionalPaymentContent {
+  // Email settings
+  toEmail: string;
+  fromEmail: string;
+  emailTitle?: string;  // Optional email title
+
+  // Content fields
+  recipientAmount: string;
+  senderName: string;
+  statusText: string;
+  message: string;
+  supportText: string;
+  supportNumber: string;
+  additionalAmount: string;
+  totalAmount: string;
+  finalAmount: string;
+  amountNotificationText?: string;  // New field for customizable amount notification
+  instructionsTitle?: string;       // New field for customizable instructions title
+
+  // Block content
+  instructionsBlock: string;
+  importantNotesBlock: string;
+  finalInstructionsBlock: string;
+
+  // Block visibility
+  visibleBlocks: {
+    header: boolean;
+    amountNotification: boolean;
+    status: boolean;
+    instructions: boolean;
+    message: boolean;
+    importantNotes: boolean;
+    finalInstructions: boolean;
+    support: boolean;
+    footer: boolean;
+  };
 }
 
 export interface PaypalEmailContent {
@@ -21,4 +60,4 @@ export interface PaypalEmailContent {
   statusHeading: string;
   toEmail: string;
   fromEmail: string;
-} 
+}

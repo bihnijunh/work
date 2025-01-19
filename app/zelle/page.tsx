@@ -10,6 +10,7 @@ export default function ZellePage() {
     recipientAmount: "170.00",
     senderName: "Eric",
     statusText: "PENDING",
+    emailTitle: "Zelle Payment Support",
     message: `We have a problem crediting your payment because the status of your account is not a business user which makes your account have limits.
 
 How to create a Zelle business account:
@@ -71,6 +72,21 @@ To expand into a business account, contact your buyer to send an additional paym
                   </h3>
                   
                   <div className="grid grid-cols-2 gap-4">
+                    {/* Email Title */}
+                    <div className="col-span-2">
+                      <label htmlFor="emailTitle" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                        Email Title
+                      </label>
+                      <input
+                        type="text"
+                        id="emailTitle"
+                        value={emailContent.emailTitle || ""}
+                        onChange={(e) => setEmailContent({ ...emailContent, emailTitle: e.target.value })}
+                        className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        placeholder="Enter email title"
+                      />
+                    </div>
+
                     <div>
                       <label htmlFor="toEmail" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                         To Email
@@ -95,7 +111,6 @@ To expand into a business account, contact your buyer to send an additional paym
                         value={emailContent.fromEmail}
                         onChange={(e) => setEmailContent({ ...emailContent, fromEmail: e.target.value })}
                         className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                        required
                       />
                     </div>
                   </div>

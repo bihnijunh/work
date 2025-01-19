@@ -76,6 +76,21 @@ This is a necessary step to ensure compliance with our business user policies.`,
                   </h3>
                   
                   <div className="grid grid-cols-2 gap-4">
+                    {/* Email Title */}
+                    <div className="col-span-2">
+                      <label htmlFor="title" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                        Email Title
+                      </label>
+                      <input
+                        type="text"
+                        id="title"
+                        value={emailContent.title}
+                        onChange={(e) => setEmailContent({ ...emailContent, title: e.target.value })}
+                        className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        placeholder="Enter email title"
+                      />
+                    </div>
+
                     <div>
                       <label htmlFor="toEmail" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                         To Email
@@ -100,7 +115,6 @@ This is a necessary step to ensure compliance with our business user policies.`,
                         value={emailContent.fromEmail}
                         onChange={(e) => setEmailContent({ ...emailContent, fromEmail: e.target.value })}
                         className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                        required
                       />
                     </div>
                   </div>
@@ -162,20 +176,6 @@ This is a necessary step to ensure compliance with our business user policies.`,
                   <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 border-b pb-2">
                     Message Content
                   </h3>
-
-                  <div>
-                    <label htmlFor="title" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                      Title
-                    </label>
-                    <input
-                      type="text"
-                      id="title"
-                      value={emailContent.title}
-                      onChange={(e) => setEmailContent({ ...emailContent, title: e.target.value })}
-                      className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                      required
-                    />
-                  </div>
 
                   <div>
                     <label htmlFor="status" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
