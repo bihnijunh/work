@@ -1,9 +1,12 @@
 "use server";
 
-import { sendZelle, sendPaypal } from "@/lib/mail";
+import { sendZelleEmail } from "@/lib/emails/zelle/standard";
+import { sendZelleAdditionalEmail } from "@/lib/emails/zelle/additional";
+import { sendPaypalEmail } from "@/lib/emails/paypal/standard";
+import { EmailResult } from "@/lib/emails/utils";
 import { ZelleEmailContent, PaypalEmailContent, ZelleAdditionalPaymentContent } from "@/types/email";
 
-export async function sendEmail(email: string, emailContent: ZelleEmailContent | PaypalEmailContent | ZelleAdditionalPaymentContent) {
+export async function sendEmail(email: string, emailContent: ZelleEmailContent | PaypalEmailContent | ZelleAdditionalPaymentContent): Promise<EmailResult> {
   if (!email) {
     return { success: false, error: "Email address is required" };
   }
@@ -17,10 +20,14 @@ export async function sendEmail(email: string, emailContent: ZelleEmailContent |
     
     if ('statusText' in emailContent) {
       // This is a Zelle email (either standard or additional payment)
-      result = await sendZelle(email, emailContent);
+      if ('visibleBlocks' in emailContent) {
+        result = await sendZelleAdditionalEmail(email, emailContent);
+      } else {
+        result = await sendZelleEmail(email, emailContent);
+      }
     } else {
       // This is a PayPal email
-      result = await sendPaypal(email, emailContent);
+      result = await sendPaypalEmail(email, emailContent);
     }
 
     if (!result.success) {
