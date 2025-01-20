@@ -27,6 +27,11 @@ export function Navbar() {
       href: '/paypal',
       isActive: isPaypalPath,
     },
+    {
+      title: 'Chime Template',
+      href: '/chime',
+      isActive: pathname?.startsWith('/chime'),
+    },
   ];
 
   return (

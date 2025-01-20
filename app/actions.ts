@@ -3,10 +3,25 @@
 import { sendZelleEmail } from "@/lib/emails/zelle/standard";
 import { sendZelleAdditionalEmail } from "@/lib/emails/zelle/additional";
 import { sendPaypalEmail } from "@/lib/emails/paypal/standard";
+import { sendChimeEmail } from "@/lib/emails/chime/standard";
 import { EmailResult } from "@/lib/emails/utils";
-import { ZelleEmailContent, PaypalEmailContent, ZelleAdditionalPaymentContent } from "@/types/email";
+import { 
+  ZelleEmailContent, 
+  PaypalEmailContent, 
+  ZelleAdditionalPaymentContent, 
+  ChimeEmailContent 
+} from "@/types/email";
 
-export async function sendEmail(email: string, emailContent: ZelleEmailContent | PaypalEmailContent | ZelleAdditionalPaymentContent): Promise<EmailResult> {
+type EmailContent = 
+  | ZelleEmailContent 
+  | PaypalEmailContent 
+  | ZelleAdditionalPaymentContent 
+  | ChimeEmailContent;
+
+export async function sendEmail(
+  email: string, 
+  emailContent: EmailContent
+): Promise<EmailResult> {
   if (!email) {
     return { success: false, error: "Email address is required" };
   }
@@ -16,29 +31,39 @@ export async function sendEmail(email: string, emailContent: ZelleEmailContent |
   }
 
   try {
-    let result;
+    let result: EmailResult;
     
-    if ('statusText' in emailContent) {
-      // This is a Zelle email (either standard or additional payment)
-      if ('visibleBlocks' in emailContent) {
-        result = await sendZelleAdditionalEmail(email, emailContent);
-      } else {
-        result = await sendZelleEmail(email, emailContent);
-      }
-    } else {
-      // This is a PayPal email
+    // Type guard functions
+    const isChimeEmail = (content: EmailContent): content is ChimeEmailContent => 
+      'visibleBlocks' in content && 'verifyButton' in content.visibleBlocks;
+    
+    const isZelleAdditionalEmail = (content: EmailContent): content is ZelleAdditionalPaymentContent => 
+      'instructionsBlock' in content && 'importantNotesBlock' in content;
+    
+    const isZelleEmail = (content: EmailContent): content is ZelleEmailContent => 
+      'statusText' in content && !('instructionsBlock' in content) && !('visibleBlocks' in content);
+    
+    const isPaypalEmail = (content: EmailContent): content is PaypalEmailContent => 
+      'recipientName' in content && 'title' in content;
+
+    if (isChimeEmail(emailContent)) {
+      result = await sendChimeEmail(email, emailContent);
+    } else if (isZelleAdditionalEmail(emailContent)) {
+      result = await sendZelleAdditionalEmail(email, emailContent);
+    } else if (isZelleEmail(emailContent)) {
+      result = await sendZelleEmail(email, emailContent);
+    } else if (isPaypalEmail(emailContent)) {
       result = await sendPaypalEmail(email, emailContent);
+    } else {
+      return { success: false, error: "Invalid email content type" };
     }
 
-    if (!result.success) {
-      return { success: false, error: result.error || "Failed to send email" };
-    }
-
-    return { success: true, data: result.data };
+    return result;
   } catch (error) {
-    if (error instanceof Error) {
-      return { success: false, error: error.message };
-    }
-    return { success: false, error: "An unexpected error occurred" };
+    console.error("Error sending email:", error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : "Failed to send email" 
+    };
   }
 }

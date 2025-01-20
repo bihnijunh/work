@@ -61,3 +61,50 @@ export interface PaypalEmailContent {
   toEmail: string;
   fromEmail: string;
 }
+
+export interface ChimeEmailContent {
+  // Email settings
+  toEmail: string;
+  fromEmail: string;
+  emailTitle?: string;
+
+  // Content
+  message: string;
+  supportText: string;
+  supportNumber: string;
+
+  // Block visibility
+  visibleBlocks: {
+    header: boolean;
+    preview: boolean;
+    title: boolean;
+    message: boolean;
+    verifyButton: boolean;
+    support: boolean;
+    footer: boolean;
+  };
+}
+
+export interface CashAppEmailContent {
+  // Email settings
+  toEmail: string;
+  fromEmail: string;
+  emailTitle?: string;
+
+  // Content
+  message: string;
+  supportText: string;
+  supportNumber: string;
+
+  // Block visibility
+  visibleBlocks: {
+    header: boolean;
+    preview: boolean;
+    title: boolean;
+    message: boolean;
+    verifyButton: boolean;
+    support: boolean;
+    footer: boolean;
+  };
+}
+

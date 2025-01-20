@@ -4,13 +4,23 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'www.zellepay.com',
+        hostname: 'braze-images.com',
       },
       {
         protocol: 'https',
-        hostname: 'www.paypalobjects.com',
+        hostname: 'ci3.googleusercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'fonts.gstatic.com',
+      }
     ],
+  },
+  // Since these are email templates, we can safely ignore the img element warnings
+  eslint: {
+    rules: {
+      '@next/next/no-img-element': 'off'
+    }
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
