@@ -50,9 +50,7 @@ export default function ZelleAdditionalPage() {
     senderName: "Eric",
     statusText: "PENDING",
     emailTitle: "Zelle Additional Payment Support",
-    instructionsBlock: `FINAL STEPS & INSTRUCTIONS TO FOLLOW
-
-1. Get your Zelle account ready.
+    instructionsBlock: `1. Get your Zelle account ready.
 2. Ask for the Zelle details from the payment issuer.
 3. Send the refund of $400.00 to the buyer's given account.
 4. Send us the proof of the refund (SCREENSHOT OR PICTURE) that the money has been sent to the given information for your account to be fully credited with the sum of $1,000.00`,
