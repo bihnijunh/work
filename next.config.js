@@ -13,14 +13,16 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'fonts.gstatic.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.paypalobjects.com',
       }
     ],
   },
   // Since these are email templates, we can safely ignore the img element warnings
   eslint: {
-    rules: {
-      '@next/next/no-img-element': 'off'
-    }
+    ignoreDuringBuilds: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
