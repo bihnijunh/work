@@ -19,3 +19,12 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+main {
+  padding-top: 4rem; /* 64px to account for fixed navbar */
+}
+
+/* Optional: Smooth scrolling for the whole page */
+html {
+  scroll-behavior: smooth;
+}
