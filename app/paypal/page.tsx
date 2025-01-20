@@ -7,7 +7,7 @@ import { sendEmail } from "../actions";
 
 export default function PaypalPage() {
   const [emailContent, setEmailContent] = useState<PaypalEmailContent>({
-    recipientName: "Chidera Ikwueze",
+    recipientName: "Opueh Sender",
     title: "PayPal Deposit Notification",
     amount: "570.00",
     senderName: "Eric Johnson",
