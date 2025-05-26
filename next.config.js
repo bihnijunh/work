@@ -4,6 +4,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'braze-images.com',
       },
       {
@@ -17,6 +21,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.paypalobjects.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.zellepay.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co',
       }
     ],
   },
@@ -40,4 +52,4 @@ const nextConfig = {
   }
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig

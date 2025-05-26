@@ -1,5 +1,5 @@
 import { ZelleAdditionalPaymentContent } from "@/types/email";
-import { resend, formatEmailWithName, EmailResult } from "../utils";
+import { resend, getSenderAddress, EmailResult } from "../utils";
 import { zelleTemplate } from "./template";
 
 /**
@@ -13,7 +13,7 @@ export function generateZelleAdditionalEmailContent(content: ZelleAdditionalPaym
           ${content.amountNotificationText || `You have successfully received an additional payment of $${content.recipientAmount}`}
         </h2>
       ` : ''}
-      
+
       ${content.visibleBlocks.status ? `
         <div style="background-color: #6D1ED4; color: white; padding: 15px; margin: 20px 0; border-radius: 5px;">
           ${content.statusText}
@@ -32,14 +32,14 @@ export function generateZelleAdditionalEmailContent(content: ZelleAdditionalPaym
           </div>
         </div>
       ` : ''}
-      
+
       <div style="text-align: left;">
         ${content.visibleBlocks.message ? `
           <div style="color: #4a5568; margin: 20px 0;">
             ${content.message}
           </div>
         ` : ''}
-        
+
         ${content.visibleBlocks.importantNotes ? `
           <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">
             <p style="color: #6D1ED4; font-weight: 500; margin-bottom: 16px;">
@@ -55,10 +55,10 @@ export function generateZelleAdditionalEmailContent(content: ZelleAdditionalPaym
             </p>
           </div>
         ` : ''}
-        
+
         ${content.visibleBlocks.support ? `
           <p style="color: #6D1ED4; font-weight: 500; margin-top: 20px;">
-            ${content.supportText} 
+            ${content.supportText}
             <a href="tel:${content.supportNumber.replace(/\D/g, '')}" style="color: #6D1ED4; text-decoration: none;">
               ${content.supportNumber}
             </a>
@@ -77,7 +77,7 @@ export function generateZelleAdditionalEmailContent(content: ZelleAdditionalPaym
 export async function sendZelleAdditionalEmail(email: string, content: ZelleAdditionalPaymentContent): Promise<EmailResult> {
   try {
     const htmlContent = generateZelleAdditionalEmailContent(content);
-    const from = formatEmailWithName(content.fromEmail, "Zelle Support");
+    const from = getSenderAddress('zelle', content.customSender);
 
     const result = await resend.emails.send({
       from,
@@ -86,8 +86,8 @@ export async function sendZelleAdditionalEmail(email: string, content: ZelleAddi
       html: htmlContent,
     });
 
-    return { 
-      success: true, 
+    return {
+      success: true,
       data: {
         id: result.data?.id || '',
         from,
@@ -97,9 +97,9 @@ export async function sendZelleAdditionalEmail(email: string, content: ZelleAddi
     };
   } catch (error) {
     console.error("Error sending Zelle additional payment email:", error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : "Failed to send Zelle additional payment email" 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Failed to send Zelle additional payment email"
     };
   }
 }

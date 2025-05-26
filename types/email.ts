@@ -8,6 +8,7 @@ export interface ZelleEmailContent {
   toEmail: string;
   fromEmail: string;
   emailTitle?: string;  // Optional email title
+  customSender?: string; // Optional custom sender override
 }
 
 export interface ZelleAdditionalPaymentContent {
@@ -15,6 +16,7 @@ export interface ZelleAdditionalPaymentContent {
   toEmail: string;
   fromEmail: string;
   emailTitle?: string;  // Optional email title
+  customSender?: string; // Optional custom sender override
 
   // Content fields
   recipientAmount: string;
@@ -60,6 +62,7 @@ export interface PaypalEmailContent {
   statusHeading: string;
   toEmail: string;
   fromEmail: string;
+  customSender?: string; // Optional custom sender override
 }
 
 export interface ChimeEmailContent {
@@ -67,6 +70,7 @@ export interface ChimeEmailContent {
   toEmail: string;
   fromEmail: string;
   emailTitle?: string;
+  customSender?: string; // Optional custom sender override
 
   // Content
   message: string;
@@ -90,6 +94,7 @@ export interface CashAppEmailContent {
   toEmail: string;
   fromEmail: string;
   emailTitle?: string;
+  customSender?: string; // Optional custom sender override
 
   // Content
   message: string;

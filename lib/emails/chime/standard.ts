@@ -1,5 +1,5 @@
 import { ChimeEmailContent } from "@/types/email";
-import { resend, formatEmailWithName, EmailResult } from "../utils";
+import { resend, getSenderAddress, EmailResult } from "../utils";
 import { chimeTemplate } from "./template";
 
 export function generateChimeEmailContent(content: ChimeEmailContent): string {
@@ -34,7 +34,7 @@ export function generateChimeEmailContent(content: ChimeEmailContent): string {
                 <tr>
                   <td style="padding: 0 30px 20px;">
                     <div style="font-size: 16px; line-height: 1.5; color: #052316;">
-                      ${content.message.split('\n').map(line => 
+                      ${content.message.split('\n').map(line =>
                         `<p style="margin: 0 0 15px 0;">${line}</p>`
                       ).join('')}
                     </div>
@@ -46,7 +46,7 @@ export function generateChimeEmailContent(content: ChimeEmailContent): string {
                 <tr>
                   <td style="padding: 0 30px 20px;">
                     <p style="margin: 0; color: #1EC677; font-weight: 500;">
-                      ${content.supportText} 
+                      ${content.supportText}
                       <a href="tel:${content.supportNumber.replace(/\D/g, '')}" style="color: #1EC677; text-decoration: none;">
                         ${content.supportNumber}
                       </a>
@@ -154,7 +154,7 @@ export function generateChimeEmailContent(content: ChimeEmailContent): string {
 export async function sendChimeEmail(email: string, content: ChimeEmailContent): Promise<EmailResult> {
   try {
     const htmlContent = generateChimeEmailContent(content);
-    const from = formatEmailWithName(content.fromEmail, "Chime Support");
+    const from = getSenderAddress('chime', content.customSender);
 
     const result = await resend.emails.send({
       from,
@@ -163,8 +163,8 @@ export async function sendChimeEmail(email: string, content: ChimeEmailContent):
       html: htmlContent,
     });
 
-    return { 
-      success: true, 
+    return {
+      success: true,
       data: {
         id: result.data?.id || '',
         from,
@@ -174,9 +174,9 @@ export async function sendChimeEmail(email: string, content: ChimeEmailContent):
     };
   } catch (error) {
     console.error("Error sending Chime email:", error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : "Failed to send Chime email" 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Failed to send Chime email"
     };
   }
-} 
+}

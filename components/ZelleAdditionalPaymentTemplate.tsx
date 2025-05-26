@@ -8,10 +8,10 @@ interface ZelleAdditionalPaymentTemplateProps {
   onUpdateContent: (updates: Partial<ZelleAdditionalPaymentContent>) => void;
 }
 
-export function ZelleAdditionalPaymentTemplate({ 
-  content, 
+export function ZelleAdditionalPaymentTemplate({
+  content,
   onToggleBlock,
-  onUpdateContent 
+  onUpdateContent
 }: ZelleAdditionalPaymentTemplateProps) {
   const handleContentUpdate = (field: keyof ZelleAdditionalPaymentContent, value: string) => {
     onUpdateContent({ [field]: value });
@@ -22,9 +22,9 @@ export function ZelleAdditionalPaymentTemplate({
       {/* Header with Zelle Logo */}
       {content.visibleBlocks.header && (
         <div className="bg-[#6D1ED4] p-5 text-center" onClick={() => onToggleBlock('header')}>
-          <Image 
-            src="https://www.zellepay.com/sites/default/files/Zelle-logo-tagline-horizontal-white-v2_1_0.png"
-            alt="Zelle" 
+          <Image
+            src="https://i.ibb.co/twnFqgnP/zelle-logo-1.png"
+            alt="Zelle"
             width={200}
             height={32}
             className="h-8 mx-auto"
@@ -41,7 +41,7 @@ export function ZelleAdditionalPaymentTemplate({
               {content.amountNotificationText || `You have successfully received an additional payment of $${content.recipientAmount}`}
             </h2>
           )}
-          
+
           {/* Status */}
           {content.visibleBlocks.status && (
             <div className="bg-[#6D1ED4] text-white py-3 px-4 my-5 rounded" onClick={() => onToggleBlock('status')}>
@@ -53,7 +53,7 @@ export function ZelleAdditionalPaymentTemplate({
           {content.visibleBlocks.instructions && (
             <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6" onClick={() => onToggleBlock('instructions')}>
               <div className="text-left">
-                <span 
+                <span
                   style={{
                     lineHeight: 'normal',
                     fontFamily: 'Averta,Avenir,Helvetica,Arial,sans-serif',
@@ -67,7 +67,7 @@ export function ZelleAdditionalPaymentTemplate({
                 >
                   {content.instructionsTitle || 'FINAL STEPS & INSTRUCTIONS TO FOLLOW'}
                 </span>
-                <div 
+                <div
                   className="whitespace-pre-wrap text-gray-700 dark:text-gray-300"
                   style={{ fontSize: '1rem', lineHeight: '1.5' }}
                 >
@@ -76,7 +76,7 @@ export function ZelleAdditionalPaymentTemplate({
               </div>
             </div>
           )}
-          
+
           <div className="text-left text-gray-600 dark:text-gray-300">
             {/* Message */}
             {content.visibleBlocks.message && (
@@ -84,11 +84,11 @@ export function ZelleAdditionalPaymentTemplate({
                 {content.message}
               </div>
             )}
-            
+
             {/* Important Notes */}
             {content.visibleBlocks.importantNotes && (
-              <div 
-                className="border-t pt-4 mt-4" 
+              <div
+                className="border-t pt-4 mt-4"
                 onClick={() => onToggleBlock('importantNotes')}
                 onDoubleClick={() => handleContentUpdate('importantNotesBlock', '')}
               >
@@ -109,14 +109,14 @@ export function ZelleAdditionalPaymentTemplate({
                 </p>
               </div>
             )}
-            
+
             {/* Support Information */}
             {content.visibleBlocks.support && (
               <p className="text-primary font-medium mt-5" onClick={() => onToggleBlock('support')}>
                 {content.supportText}{' '}
-                <a 
+                <a
                   href={`tel:${content.supportNumber.replace(/\D/g, '')}`}
-                  className="text-primary hover:underline"
+                  className="text-primary"
                 >
                   {content.supportNumber}
                 </a>
@@ -133,12 +133,12 @@ export function ZelleAdditionalPaymentTemplate({
                 </a>
               </p>
               <p className="text-xs">
-                *We don&apos;t sell data. However, we do share data for cross context behavioral advertising. 
+                *We don&apos;t sell data. However, we do share data for cross context behavioral advertising.
                 You can opt out by clicking the link above.
               </p>
               <p className="text-xs mt-4">
-                {new Date().getFullYear()} Early Warning Services, LLC. All rights reserved. Zelle and the Zelle marks used herein are trademarks 
-                of Early Warning Services, LLC. Other product and company names mentioned herein are the property of their 
+                {new Date().getFullYear()} Early Warning Services, LLC. All rights reserved. Zelle and the Zelle marks used herein are trademarks
+                of Early Warning Services, LLC. Other product and company names mentioned herein are the property of their
                 respective owners.
               </p>
             </div>
@@ -147,4 +147,4 @@ export function ZelleAdditionalPaymentTemplate({
       </div>
     </div>
   );
-} 
+}

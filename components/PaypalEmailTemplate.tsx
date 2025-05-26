@@ -18,7 +18,7 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
 
       {/* PayPal Logo */}
       <div style={{ padding: '16px' }}>
-        <Image 
+        <Image
           src="https://www.paypalobjects.com/digitalassets/c/system-triggered-email/n/layout/images/paypal-rebranding/pp-logo-in-circle-2x.png"
           alt="PayPal"
           width={63}
@@ -31,12 +31,12 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
         <h1 style={{ fontSize: '32px', fontWeight: 500, lineHeight: '38px', color: '#001c64', marginBottom: '24px' }}>
           {content.title}
         </h1>
-        
+
         <div style={{ fontSize: '14px', color: '#2c2e2f' }}>
           <div style={{ backgroundColor: '#0070BA', color: 'white', padding: '16px', borderRadius: '8px', textAlign: 'center', fontSize: '18px', fontWeight: 500, marginBottom: '24px' }}>
             You have received ${content.amount} from {content.senderName}
           </div>
-          
+
           <div style={{ backgroundColor: '#F5F7FA', padding: '16px', borderRadius: '8px', textAlign: 'center', fontWeight: 500, marginBottom: '24px' }}>
             {content.statusHeading}: {content.status}
           </div>
@@ -46,10 +46,16 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
               <p key={index} style={{ marginBottom: '16px' }}>{paragraph}</p>
             ))}
           </div>
-          
+
           <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: '16px' }}>
             <p style={{ color: '#0070BA', fontWeight: 500, margin: 0 }}>
-              {content.supportText} {content.supportNumber}
+              {content.supportText}{' '}
+              <a
+                href={`tel:${content.supportNumber.replace(/\D/g, '')}`}
+                style={{ color: '#0070BA', textDecoration: 'none' }}
+              >
+                {content.supportNumber}
+              </a>
             </p>
           </div>
         </div>
@@ -58,7 +64,7 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
       {/* Footer */}
       <div style={{ borderTop: '1px solid #e5e7eb' }}>
         <div style={{ padding: '16px' }}>
-          <Image 
+          <Image
             src="https://www.paypalobjects.com/digitalassets/c/system-triggered-email/n/layout/images/paypal-rebranding/footer-logo-with-crop-2x.png"
             alt="PayPal"
             width={283}
@@ -80,13 +86,13 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
         {/* Footer Text */}
         <div style={{ padding: '16px 32px', fontSize: '12px', color: '#2c2e2f' }}>
           <p style={{ marginBottom: '16px' }}>
-            PayPal is committed to preventing fraudulent emails. Emails from PayPal will always contain your full name. 
+            PayPal is committed to preventing fraudulent emails. Emails from PayPal will always contain your full name.
             <a href="#" style={{ color: '#0070e0', textDecoration: 'none', marginLeft: '4px' }}>
               Learn to identify phishing
             </a>
           </p>
           <p style={{ marginBottom: '16px' }}>
-            Please don&apos;t reply to this email. To get in touch with us, click 
+            Please don&apos;t reply to this email. To get in touch with us, click
             <a href="#" style={{ color: '#0070e0', textDecoration: 'none', marginLeft: '4px' }}>
               Help &amp; Contact
             </a>.
@@ -101,4 +107,4 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
       </div>
     </div>
   );
-} 
+}

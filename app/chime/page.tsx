@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChimeEmailTemplate } from "@/components/ChimeEmailTemplate";
+import { SenderConfiguration } from "@/components/SenderConfiguration";
 import { CashAppEmailContent } from "@/types/email";
 import { sendEmail } from "../actions";
 
@@ -54,12 +55,12 @@ How do I expand my account - Action needed.
 
 Contact the last buyer to send an additional payment of $300.00USD for your account to be fully expanded. Soon as this is done we will credit the total sum of $316.00USD with a free compensation fee of $10.00USD for the inconvenience caused.`,
     supportText: "For Assistance, contact the support number below;",
-    supportNumber: "+1(681) 523-4360",
+    supportNumber: "+1 (336) 310-9279",
     toEmail: "",
-    fromEmail: "no-replychime@milanosailexpress.com",
+    fromEmail: "chime@customersupportagent.support",
     visibleBlocks: { ...defaultVisibleBlocks }
   });
-  
+
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
@@ -70,7 +71,7 @@ Contact the last buyer to send an additional payment of $300.00USD for your acco
 
     try {
       const result = await sendEmail(emailContent.toEmail, emailContent);
-      
+
       if (result.success) {
         setStatus("success");
         setEmailContent(prev => ({ ...prev, toEmail: "" }));
@@ -131,8 +132,8 @@ Contact the last buyer to send an additional payment of $300.00USD for your acco
                 </button>
               )}
             </div>
-            <ChimeEmailTemplate 
-              content={emailContent} 
+            <ChimeEmailTemplate
+              content={emailContent}
               onToggleBlock={handleToggleBlock}
             />
           </div>
@@ -186,18 +187,26 @@ Contact the last buyer to send an additional payment of $300.00USD for your acco
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                        From Email
+                        From Email (Legacy - Use Sender Configuration Below)
                       </label>
                       <input
                         type="email"
                         value={emailContent.fromEmail}
                         onChange={(e) => handleUpdateContent({ fromEmail: e.target.value })}
+                        placeholder="customersupportchimemgt@customersupportagent.support"
                         className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                         required
                       />
                     </div>
                   </div>
                 </BlockConfig>
+
+                {/* Sender Configuration */}
+                <SenderConfiguration
+                  service="chime"
+                  currentSender={emailContent.customSender}
+                  onSenderChange={(sender) => handleUpdateContent({ customSender: sender })}
+                />
 
                 {/* Message Content */}
                 <BlockConfig
@@ -286,4 +295,4 @@ Contact the last buyer to send an additional payment of $300.00USD for your acco
       </div>
     </div>
   );
-} 
+}

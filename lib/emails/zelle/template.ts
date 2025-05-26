@@ -6,22 +6,22 @@ export const zelleTemplate = (content: string) => `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zelle Support</title>
     <style>
-      body { 
-        font-family: Arial, sans-serif; 
-        line-height: 1.6; 
-        color: #333; 
-        margin: 0; 
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        margin: 0;
         padding: 0;
       }
-      .container { 
-        max-width: 600px; 
-        margin: 0 auto; 
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
         padding: 20px;
         background-color: #ffffff;
       }
-      .header { 
-        background-color: #6D1ED4; 
-        padding: 20px; 
+      .header {
+        background-color: #6D1ED4;
+        padding: 20px;
         text-align: center;
       }
       .logo {
@@ -64,7 +64,7 @@ export const zelleTemplate = (content: string) => `
   <body>
     <div class="container">
       <div class="header">
-        <img src="https://www.zellepay.com/sites/default/files/Zelle-logo-tagline-horizontal-white-v2_1_0.png" alt="Zelle" class="logo">
+        <img src="https://i.ibb.co/twnFqgnP/zelle-logo-1.png" alt="Zelle" class="logo" style="height: 32px; width: auto; display: block; margin: 0 auto;">
       </div>
 
       ${content}
@@ -99,12 +99,12 @@ export const zelleTemplate = (content: string) => `
           </a>
         </p>
         <p class="disclaimer">
-          *We don't sell data. However, we do share data for cross context behavioral advertising. 
+          *We don't sell data. However, we do share data for cross context behavioral advertising.
           You can opt out by clicking the link above.
         </p>
         <p class="disclaimer" style="margin-top: 16px;">
-          ${new Date().getFullYear()} Early Warning Services, LLC. All rights reserved. Zelle and the Zelle marks used herein are trademarks 
-          of Early Warning Services, LLC. Other product and company names mentioned herein are the property of their 
+          ${new Date().getFullYear()} Early Warning Services, LLC. All rights reserved. Zelle and the Zelle marks used herein are trademarks
+          of Early Warning Services, LLC. Other product and company names mentioned herein are the property of their
           respective owners.
         </p>
       </div>

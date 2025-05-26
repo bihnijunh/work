@@ -23,7 +23,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
     }}>
       {/* Hidden preview text */}
       {content.visibleBlocks.preview && (
-        <div 
+        <div
           style={{
         display: 'none',
         fontSize: '1px',
@@ -55,7 +55,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
               <div style={{ width: '100%', textAlign: 'center' }}>
                 {/* Header with Chime Logo */}
                 {content.visibleBlocks.header && (
-                  <table 
+                  <table
                     style={{
                   borderSpacing: '0',
                   borderCollapse: 'collapse',
@@ -70,7 +70,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                     <tr>
                       <td style={{ padding: 0 }}>
                         <a href="https://www.chime.com" target="_blank" rel="noopener noreferrer">
-                          <Image 
+                          <Image
                             src="https://braze-images.com/appboy/communication/assets/image_assets/images/65cb26e0d78955004bdec58e/original.png"
                             alt="Chime"
                             width={375}
@@ -84,7 +84,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                         </a>
                       </td>
                     </tr>
-                   
+
                   </tbody>
                 </table>
                 )}
@@ -105,7 +105,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                     {content.visibleBlocks.title && (
                       <tr onClick={() => onToggleBlock('title')}>
                         <td style={{ padding: '0 30px 22px' }}>
-                          <div style={{ 
+                          <div style={{
                             textAlign: 'left',
                             fontSize: '48px',
                             lineHeight: '52px',
@@ -153,7 +153,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                           }}>
                             <tbody>
                               <tr>
-                                <td style={{ 
+                                <td style={{
                                   borderRadius: '8px',
                                   padding: 0,
                                   backgroundColor: '#1EC677',
@@ -178,7 +178,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                               </tr>
                               <tr>
                                 <td style={{ padding: '20px 0 0' }}>
-                                  <img 
+                                  <img
                                     src="https://ci3.googleusercontent.com/meips/ADKq_NbAQ8JSi49vhhq1n8OScC1B00N0iSKLbt2Szkz6_-MMP22ktjtP8IbxmBLsTDIlR_MKXGE9TFPYGe2Eke1kvhjSN6rrJY4_yiM40i0lhF1zupiw47dri3zL3wJ5gvV7Ku41x5CROb-EK3g1-w9FYZY03HzOQgKpsCmOEbaIPdxjGi3vFKsPWIZsbXAPZ2Uo=s0-d-e1-ft#https://braze-images.com/appboy/communication/assets/image_assets/images/66a75347189c73005c5ef712/original.png?1722241863"
                                     alt="Chime Verification"
                                     style={{
@@ -224,10 +224,10 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                                 <td style={{ fontSize: '10px', lineHeight: '10px', padding: '0 0 12px' }}>&nbsp;</td>
                               </tr>
                               <tr>
-                                <td style={{ 
-                                  fontSize: '16px', 
-                                  lineHeight: '25px', 
-                                  fontWeight: 400, 
+                                <td style={{
+                                  fontSize: '16px',
+                                  lineHeight: '25px',
+                                  fontWeight: 400,
                                   padding: '20px 30px 42px',
                                   textAlign: 'left'
                                 }}>
@@ -276,7 +276,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                               <tr>
                                 <td style={{ padding: '0 30px 22px' }}>
                                   <a href="#" style={{ color: '#1ec677', textDecoration: 'none', fontSize: '32px', fontWeight: 700 }}>
-                                    <img 
+                                    <img
                                       src="https://ci3.googleusercontent.com/meips/ADKq_NYX3j8L4ZBBgeruVzUH5ksfkxYAQCVcxEjMxNqhPV6Ea4-EkazJr4_-dEfTdW1r9U_raBoW6ok11XPdx-pSikP6G1T51f7-FRzjmOjsOnC1c5p88l43oOxoATEitzXh3nbqI7iQpgV1GvWdTKjDBZqb_omI8lJSZbXFuXpJ1dsGziCuevpt81TTAPb2afMh=s0-d-e1-ft#https://braze-images.com/appboy/communication/assets/image_assets/images/65cb1e7c22a85f0055b6cf60/original.png?1707810428"
                                       alt="Chime"
                                       width="110"
@@ -330,7 +330,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
 
                 {/* Footer Section */}
                 {content.visibleBlocks.footer && (
-                  <table 
+                  <table
                     style={{
                   borderSpacing: '0',
                   borderCollapse: 'collapse',
@@ -347,13 +347,13 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                         <div style={{ fontWeight: 'normal', textAlign: 'left' }}>
                           ©2024 Chime Financial, Inc. All rights reserved.<br />
                           PO Box 417, San Francisco, CA 94104<br /><br />
-                          
+
                           Please do not reply to this email. This mailbox is not monitored.<br /><br />
-                          
+
                           Chime is a financial technology company, not a bank. Banking services are provided by our partner banks.<br /><br />
-                          
+
                           This email was sent to you because you have a pending transaction with Chime.<br /><br />
-                          
+
                           If you wish to unsubscribe from Chime notifications, you can <a href="#" style={{ color: '#CCF2D2', textDecoration: 'underline', fontWeight: 'bold' }}>unsubscribe</a>.
                         </div>
                       </td>
@@ -368,4 +368,4 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
       </table>
     </div>
   );
-} 
+}

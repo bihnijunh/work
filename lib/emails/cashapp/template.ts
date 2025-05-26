@@ -6,22 +6,22 @@ export const cashAppTemplate = (content: string) => `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chime Support</title>
     <style>
-      body { 
+      body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        line-height: 1.6; 
-        color: #333; 
-        margin: 0; 
+        line-height: 1.6;
+        color: #333;
+        margin: 0;
         padding: 0;
       }
-      .container { 
-        max-width: 600px; 
-        margin: 0 auto; 
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
         padding: 20px;
         background-color: #ffffff;
       }
-      .header { 
-        background-color: #1EC677; 
-        padding: 20px; 
+      .header {
+        background-color: #1EC677;
+        padding: 20px;
         text-align: center;
       }
       .logo {
@@ -79,4 +79,4 @@ export const cashAppTemplate = (content: string) => `
     </div>
   </body>
   </html>
-`; 
+`;

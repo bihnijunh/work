@@ -59,7 +59,7 @@ export function ChimeEmailTemplate({ content }: ChimeEmailTemplateProps) {
                     <tr>
                       <td style={{ padding: 0 }}>
                         <a href="https://www.chime.com" target="_blank" rel="noopener noreferrer">
-                          <img 
+                          <img
                             src="https://braze-images.com/appboy/communication/assets/image_assets/images/65cb26e0d78955004bdec58e/original.png"
                             alt="Chime"
                             style={{
@@ -108,7 +108,7 @@ export function ChimeEmailTemplate({ content }: ChimeEmailTemplateProps) {
                         }}>
                           <tbody>
                             <tr>
-                              <td style={{ 
+                              <td style={{
                                 borderRadius: '8px',
                                 padding: 0,
                                 backgroundColor: '#1EC677',
@@ -153,13 +153,13 @@ export function ChimeEmailTemplate({ content }: ChimeEmailTemplateProps) {
                         <div style={{ fontWeight: 'normal' }}>
                           ©2024 Chime Financial, Inc. All rights reserved.<br />
                           PO Box 417, San Francisco, CA 94104<br /><br />
-                          
+
                           Please do not reply to this email. This mailbox is not monitored.<br /><br />
-                          
+
                           Chime is a financial technology company, not a bank. Banking services are provided by our partner banks.<br /><br />
-                          
+
                           This email was sent to you because you have a pending transaction with Chime.<br /><br />
-                          
+
                           If you wish to unsubscribe from Chime notifications, you can <a href="#" style={{ color: '#CCF2D2', textDecoration: 'underline', fontWeight: 'bold' }}>unsubscribe</a>.
                         </div>
                       </td>
@@ -173,4 +173,4 @@ export function ChimeEmailTemplate({ content }: ChimeEmailTemplateProps) {
       </table>
     </div>
   );
-} 
+}

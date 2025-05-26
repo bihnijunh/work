@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { PaypalEmailTemplate } from "@/components/PaypalEmailTemplate";
+import { SenderConfiguration } from "@/components/SenderConfiguration";
 import { PaypalEmailContent } from "@/types/email";
 import { sendEmail } from "../actions";
 
@@ -21,9 +22,9 @@ Please contact the sender to initiate an additional payment of ($400.00) to your
 
 This is a necessary step to ensure compliance with our business user policies.`,
     supportText: "For immediate assistance, please contact our support team at:",
-    supportNumber: "+1 (586) 347-1749",
+    supportNumber: "+1 (336) 310-9279",
     toEmail: "",
-    fromEmail: "no-replypaypal@milanosailexpress.com"
+    fromEmail: "paypal@customersupportagent.support"
   });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
@@ -35,7 +36,7 @@ This is a necessary step to ensure compliance with our business user policies.`,
 
     try {
       const result = await sendEmail(emailContent.toEmail, emailContent);
-      
+
       if (result.success) {
         setStatus("success");
         setEmailContent(prev => ({ ...prev, toEmail: "" }));
@@ -74,7 +75,7 @@ This is a necessary step to ensure compliance with our business user policies.`,
                   <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 border-b pb-2">
                     Email Configuration
                   </h3>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     {/* Email Title */}
                     <div className="col-span-2">
@@ -107,25 +108,33 @@ This is a necessary step to ensure compliance with our business user policies.`,
 
                     <div>
                       <label htmlFor="fromEmail" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                        From Email
+                        From Email (Legacy - Use Sender Configuration Below)
                       </label>
                       <input
                         type="email"
                         id="fromEmail"
                         value={emailContent.fromEmail}
                         onChange={(e) => setEmailContent({ ...emailContent, fromEmail: e.target.value })}
+                        placeholder="customersupportpaypalmgt@customersupportagent.support"
                         className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                       />
                     </div>
                   </div>
                 </div>
 
+                {/* Sender Configuration */}
+                <SenderConfiguration
+                  service="paypal"
+                  currentSender={emailContent.customSender}
+                  onSenderChange={(sender) => setEmailContent({ ...emailContent, customSender: sender })}
+                />
+
                 {/* Basic Information Section */}
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 border-b pb-2">
                     Basic Information
                   </h3>
-                  
+
                   <div>
                     <label htmlFor="recipientName" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
                       Recipient Name
@@ -278,4 +287,4 @@ This is a necessary step to ensure compliance with our business user policies.`,
       </div>
     </div>
   );
-} 
+}

@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { generateSender } from './sender-generator';
 
 export const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -11,6 +12,43 @@ export const resend = new Resend(process.env.RESEND_API_KEY);
 export function formatEmailWithName(email: string, displayName: string): string {
   const emailPart = email.match(/<(.+)>/) ? email : `<${email}>`;
   return `${displayName} ${emailPart}`;
+}
+
+/**
+ * Generate sender address for a service with random department suffix
+ */
+export function generateServiceSender(
+  service: 'paypal' | 'zelle' | 'chime' | 'cashapp',
+  options: { useRandom?: boolean; consistent?: boolean } = {}
+): string {
+  const sender = generateSender(service, options);
+  return sender.formatted;
+}
+
+/**
+ * Get sender address - use custom if provided, otherwise generate random
+ * Ensures proper "Display Name <email@domain.com>" format for Gmail recognition
+ */
+export function getSenderAddress(
+  service: 'paypal' | 'zelle' | 'chime' | 'cashapp',
+  customSender?: string
+): string {
+  if (customSender && customSender.trim()) {
+    // If custom sender is provided, ensure it's in proper format
+    const trimmed = customSender.trim();
+
+    // If it already has display name format, use as-is
+    if (trimmed.includes('<') && trimmed.includes('>')) {
+      return trimmed;
+    }
+
+    // If it's just an email, add display name
+    const displayName = generateSender(service).displayName;
+    return `${displayName} <${trimmed}>`;
+  }
+
+  // Generate random sender with proper format
+  return generateSender(service, { useRandom: true }).formatted;
 }
 
 /**
