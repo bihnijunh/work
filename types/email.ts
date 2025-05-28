@@ -35,19 +35,6 @@ export interface ZelleAdditionalPaymentContent {
   instructionsBlock: string;
   importantNotesBlock: string;
   finalInstructionsBlock: string;
-
-  // Block visibility
-  visibleBlocks: {
-    header: boolean;
-    amountNotification: boolean;
-    status: boolean;
-    instructions: boolean;
-    message: boolean;
-    importantNotes: boolean;
-    finalInstructions: boolean;
-    support: boolean;
-    footer: boolean;
-  };
 }
 
 export interface PaypalEmailContent {

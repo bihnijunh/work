@@ -11,7 +11,7 @@ export function ZelleEmailTemplate({ content }: ZelleEmailTemplateProps) {
       {/* Header with Zelle Logo */}
       <div className="bg-[#6D1ED4] p-5 text-center">
         <Image
-          src="https://i.ibb.co/twnFqgnP/zelle-logo-1.png"
+          src="https://i.ibb.co/dsVRwbDH/quizlet.png"
           alt="Zelle"
           width={200}
           height={32}

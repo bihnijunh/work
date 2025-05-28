@@ -19,15 +19,28 @@ export function SenderConfiguration({
   const [senderMode, setSenderMode] = useState<'random' | 'custom'>('random');
   const [customSender, setCustomSender] = useState('');
   const [generatedSender, setGeneratedSender] = useState('');
+  const [isClient, setIsClient] = useState(false);
 
-  // Generate initial random sender
-  useEffect(() => {
-    const sender = generateSender(service, { useRandom: true });
-    setGeneratedSender(sender.formatted);
-    if (!currentSender) {
-      onSenderChange(sender.formatted);
-    }
+  // Memoize display name to avoid hydration issues
+  const displayName = React.useMemo(() => {
+    return generateSender(service).displayName;
   }, [service]);
+
+  // Ensure we're on the client side to avoid hydration issues
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Generate initial random sender only on client
+  useEffect(() => {
+    if (isClient) {
+      const sender = generateSender(service, { useRandom: true });
+      setGeneratedSender(sender.formatted);
+      if (!currentSender) {
+        onSenderChange(sender.formatted);
+      }
+    }
+  }, [service, isClient]);
 
   // Handle mode change
   const handleModeChange = (mode: 'random' | 'custom') => {
@@ -36,7 +49,7 @@ export function SenderConfiguration({
     if (mode === 'random') {
       onSenderChange(generatedSender);
     } else {
-      const defaultCustom = `${generateSender(service).displayName} <customersupport${service}dept@customersupportagent.support>`;
+      const defaultCustom = `${displayName} <customersupport${service}dept@customersupportagent.support>`;
       setCustomSender(defaultCustom);
       onSenderChange(defaultCustom);
     }
@@ -97,14 +110,15 @@ export function SenderConfiguration({
             <div className="flex items-center space-x-2">
               <input
                 type="text"
-                value={generatedSender}
+                value={isClient ? generatedSender : 'Loading...'}
                 readOnly
                 className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm"
               />
               <button
                 type="button"
                 onClick={generateNewSender}
-                className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium transition-colors"
+                disabled={!isClient}
+                className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium transition-colors disabled:opacity-50"
               >
                 🎲 New Random
               </button>
@@ -122,7 +136,7 @@ export function SenderConfiguration({
               type="text"
               value={customSender}
               onChange={(e) => handleCustomSenderChange(e.target.value)}
-              placeholder={`${generateSender(service).displayName} <customersupport${service}dept@customersupportagent.support>`}
+              placeholder={`${displayName} <customersupport${service}dept@customersupportagent.support>`}
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
             <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -144,10 +158,10 @@ export function SenderConfiguration({
             <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Gmail will show:</p>
             <div className="flex items-center space-x-2">
               <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                {generateSender(service).displayName.charAt(0)}
+                {displayName.charAt(0)}
               </div>
               <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                {generateSender(service).displayName}
+                {displayName}
               </p>
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -157,20 +171,22 @@ export function SenderConfiguration({
         </div>
       </div>
 
-      {/* Quick Examples */}
-      <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
-        <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">Example Random Senders:</p>
-        <div className="space-y-1">
-          {[1, 2, 3].map((i) => {
-            const example = generateSender(service, { useRandom: true });
-            return (
-              <p key={i} className="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                {example.formatted}
-              </p>
-            );
-          })}
+      {/* Quick Examples - Only show on client to avoid hydration issues */}
+      {isClient && (
+        <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
+          <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">Example Random Senders:</p>
+          <div className="space-y-1">
+            {[1, 2, 3].map((i) => {
+              const example = generateSender(service, { useRandom: true });
+              return (
+                <p key={i} className="text-xs text-gray-500 dark:text-gray-400 font-mono">
+                  {example.formatted}
+                </p>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

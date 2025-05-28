@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Logo Design Examples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .logo-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .logo-example {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        /* Example 1: Gradient Circle Logo */
+        .gradient-circle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #6D1ED4, #8B5CF6, #A855F7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            margin: 0 auto 10px;
+        }
+        
+        /* Example 2: Modern Z Logo */
+        .z-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #6D1ED4, #8B5CF6);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 32px;
+            margin: 0 auto 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .z-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+        
+        /* Example 3: Geometric Logo */
+        .geometric-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            position: relative;
+        }
+        
+        .geometric-logo .shape {
+            position: absolute;
+            border-radius: 8px;
+        }
+        
+        .geometric-logo .shape1 {
+            width: 40px;
+            height: 40px;
+            background: #6D1ED4;
+            top: 0;
+            left: 0;
+            transform: rotate(15deg);
+        }
+        
+        .geometric-logo .shape2 {
+            width: 40px;
+            height: 40px;
+            background: #8B5CF6;
+            top: 20px;
+            left: 20px;
+            transform: rotate(-15deg);
+        }
+        
+        .geometric-logo .shape3 {
+            width: 40px;
+            height: 40px;
+            background: #A855F7;
+            top: 40px;
+            left: 40px;
+            transform: rotate(15deg);
+        }
+        
+        /* Example 4: Text-based Logo */
+        .text-logo {
+            background: linear-gradient(135deg, #6D1ED4, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px auto;
+            font-family: 'Arial Black', sans-serif;
+        }
+        
+        /* Example 5: SVG-style CSS Logo */
+        .svg-style {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            position: relative;
+            background: linear-gradient(135deg, #6D1ED4, #8B5CF6);
+            border-radius: 20px;
+        }
+        
+        .svg-style::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            height: 60%;
+            background: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .svg-style::after {
+            content: 'Z';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #6D1ED4;
+            font-weight: bold;
+            font-size: 24px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS Logo Design Examples (No Images)</h1>
+    
+    <div class="logo-container">
+        <div class="logo-example">
+            <div class="gradient-circle">Z</div>
+            <h3>Gradient Circle</h3>
+            <p>Simple gradient with letter</p>
+        </div>
+        
+        <div class="logo-example">
+            <div class="z-logo">Z</div>
+            <h3>Modern Z Logo</h3>
+            <p>With shine animation</p>
+        </div>
+        
+        <div class="logo-example">
+            <div class="geometric-logo">
+                <div class="shape shape1"></div>
+                <div class="shape shape2"></div>
+                <div class="shape shape3"></div>
+            </div>
+            <h3>Geometric</h3>
+            <p>Overlapping shapes</p>
+        </div>
+        
+        <div class="logo-example">
+            <div class="text-logo">Zelle</div>
+            <h3>Text Gradient</h3>
+            <p>Gradient text effect</p>
+        </div>
+        
+        <div class="logo-example">
+            <div class="svg-style"></div>
+            <h3>SVG Style</h3>
+            <p>CSS pseudo-elements</p>
+        </div>
+    </div>
+</body>
+</html>

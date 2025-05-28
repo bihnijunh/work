@@ -6,45 +6,6 @@ import { ZelleAdditionalPaymentTemplate } from "@/components/ZelleAdditionalPaym
 import { SenderConfiguration } from "@/components/SenderConfiguration";
 import { ZelleAdditionalPaymentContent } from "@/types/email";
 
-const defaultVisibleBlocks = {
-  header: true,
-  amountNotification: true,
-  status: true,
-  instructions: true,
-  message: true,
-  importantNotes: true,
-  finalInstructions: true,
-  support: true,
-  footer: true,
-};
-
-interface BlockConfigProps {
-  title: string;
-  visible: boolean;
-  onToggle: () => void;
-  children: React.ReactNode;
-}
-
-function BlockConfig({ title, visible, onToggle, children }: BlockConfigProps) {
-  return (
-    <div className="border dark:border-gray-700 rounded-lg p-4 mb-4">
-      <div className="flex justify-between items-center mb-3 border-b pb-2">
-        <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">
-          {title}
-        </h3>
-        <button
-          type="button"
-          onClick={onToggle}
-          className="text-red-500 hover:text-red-700"
-        >
-          {visible ? 'Hide Block' : 'Show Block'}
-        </button>
-      </div>
-      {children}
-    </div>
-  );
-}
-
 export default function ZelleAdditionalPage() {
   const [emailContent, setEmailContent] = useState<ZelleAdditionalPaymentContent>({
     recipientAmount: "400.00",
@@ -68,8 +29,7 @@ export default function ZelleAdditionalPage() {
     importantNotesBlock: `IMPORTANT NOTE: $2,000.00 won't reflect into your account yet until you have carried on with the instructions given above.
 
 Once the refund is complete, $1,000.00 will reflect in your account immediately.`,
-    finalInstructionsBlock: `YOUR FUNDS HAS BEEN APPROVED & SECURED BUT YOU ARE REQUIRED TO CARRY ON AND FOLLOW THE GIVEN INSTRUCTION ABOVE FOR YOUR ACCOUNT TO BE FULLY CREDITED WITH THE TOTAL SUM OF $1,000.00 IMMEDIATELY.`,
-    visibleBlocks: { ...defaultVisibleBlocks }
+    finalInstructionsBlock: `YOUR FUNDS HAS BEEN APPROVED & SECURED BUT YOU ARE REQUIRED TO CARRY ON AND FOLLOW THE GIVEN INSTRUCTION ABOVE FOR YOUR ACCOUNT TO BE FULLY CREDITED WITH THE TOTAL SUM OF $1,000.00 IMMEDIATELY.`
   });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
@@ -96,314 +56,336 @@ Once the refund is complete, $1,000.00 will reflect in your account immediately.
     }
   };
 
-  const handleToggleBlock = (blockName: keyof typeof defaultVisibleBlocks) => {
-    setEmailContent(prev => ({
-      ...prev,
-      visibleBlocks: {
-        ...prev.visibleBlocks,
-        [blockName]: !prev.visibleBlocks[blockName]
-      }
-    }));
-  };
-
-  const handleRestoreBlocks = () => {
-    setEmailContent(prev => ({
-      ...prev,
-      visibleBlocks: { ...defaultVisibleBlocks }
-    }));
-  };
-
-  const handleUpdateContent = (updates: Partial<ZelleAdditionalPaymentContent>) => {
-    setEmailContent(prev => ({
-      ...prev,
-      ...updates
-    }));
-  };
-
-  // Count hidden blocks
-  const hiddenBlocksCount = Object.values(emailContent.visibleBlocks).filter(v => !v).length;
-
   return (
     <div className="p-8">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Email Template Preview */}
           <div>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                Email Preview
-              </h2>
-              {hiddenBlocksCount > 0 && (
-                <button
-                  onClick={handleRestoreBlocks}
-                  className="text-sm px-3 py-1 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
-                >
-                  Restore {hiddenBlocksCount} Hidden Block{hiddenBlocksCount !== 1 ? 's' : ''}
-                </button>
-              )}
-            </div>
-            <ZelleAdditionalPaymentTemplate
-              content={emailContent}
-              onToggleBlock={handleToggleBlock}
-              onUpdateContent={handleUpdateContent}
-            />
+            <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+              Email Preview
+            </h2>
+            <ZelleAdditionalPaymentTemplate content={emailContent} />
           </div>
 
-          {/* Block Configuration */}
+          {/* Form */}
           <div>
             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
-              Block Configuration
+              Email Configuration
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Email Title Configuration */}
-              <BlockConfig
-                title="Email Title"
-                visible={true}
-                onToggle={() => {}}
-              >
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 transition-colors duration-200">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Email Configuration */}
                 <div className="space-y-4">
+                  <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 border-b pb-2">
+                    Email Configuration
+                  </h3>
+
                   <div>
-                    <label
-                      htmlFor="emailTitle"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                    >
-                      Custom Email Title
+                    <label htmlFor="emailTitle" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                      Email Title
                     </label>
                     <input
                       type="text"
                       id="emailTitle"
                       value={emailContent.emailTitle || ""}
-                      onChange={(e) =>
-                        setEmailContent((prev) => ({
-                          ...prev,
-                          emailTitle: e.target.value,
-                        }))
-                      }
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white sm:text-sm"
-                      placeholder="Enter custom email title"
-                    />
-                  </div>
-                </div>
-              </BlockConfig>
-
-              {/* Email Settings */}
-              <BlockConfig
-                title="Email Settings"
-                visible={true}
-                onToggle={() => {}}
-              >
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                      To Email
-                    </label>
-                    <input
-                      type="email"
-                      value={emailContent.toEmail}
-                      onChange={(e) => handleUpdateContent({ toEmail: e.target.value })}
+                      onChange={(e) => setEmailContent({ ...emailContent, emailTitle: e.target.value })}
+                      placeholder="Zelle Additional Payment Support"
                       className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                      required
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                      From Email (Legacy - Use Sender Configuration Below)
-                    </label>
-                    <input
-                      type="email"
-                      value={emailContent.fromEmail}
-                      onChange={(e) => handleUpdateContent({ fromEmail: e.target.value })}
-                      placeholder="customersupportzellemgt@customersupportagent.support"
-                      className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                      required
-                    />
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="toEmail" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                        To Email
+                      </label>
+                      <input
+                        type="email"
+                        id="toEmail"
+                        value={emailContent.toEmail}
+                        onChange={(e) => setEmailContent({ ...emailContent, toEmail: e.target.value })}
+                        placeholder="recipient@example.com"
+                        className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="fromEmail" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                        From Email (Legacy - Use Sender Configuration Below)
+                      </label>
+                      <input
+                        type="email"
+                        id="fromEmail"
+                        value={emailContent.fromEmail}
+                        onChange={(e) => setEmailContent({ ...emailContent, fromEmail: e.target.value })}
+                        placeholder="customersupportzellemgt@customersupportagent.support"
+                        className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
                   </div>
                 </div>
-              </BlockConfig>
 
-              {/* Sender Configuration */}
-              <SenderConfiguration
-                service="zelle"
-                currentSender={emailContent.customSender}
-                onSenderChange={(sender) => handleUpdateContent({ customSender: sender })}
-              />
+                {/* Sender Configuration */}
+                <SenderConfiguration
+                  service="zelle"
+                  currentSender={emailContent.customSender}
+                  onSenderChange={(sender) => setEmailContent({ ...emailContent, customSender: sender })}
+                />
 
-              {/* Amount Notification Block */}
-              <BlockConfig
-                title="Amount Notification Block"
-                visible={emailContent.visibleBlocks.amountNotification}
-                onToggle={() => handleToggleBlock('amountNotification')}
-              >
-                <div>
-                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                    Amount Notification Text
-                  </label>
-                  <textarea
-                    value={emailContent.amountNotificationText || `You have successfully received an additional payment of $${emailContent.recipientAmount}`}
-                    onChange={(e) => handleUpdateContent({ amountNotificationText: e.target.value })}
-                    rows={3}
-                    className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                  />
-                </div>
-              </BlockConfig>
-
-              {/* Status Block */}
-              <BlockConfig
-                title="Status Block"
-                visible={emailContent.visibleBlocks.status}
-                onToggle={() => handleToggleBlock('status')}
-              >
-                <div>
-                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                    Status Text
-                  </label>
-                  <input
-                    type="text"
-                    value={emailContent.statusText}
-                    onChange={(e) => handleUpdateContent({ statusText: e.target.value })}
-                    className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                  />
-                </div>
-              </BlockConfig>
-
-              {/* Instructions Block */}
-              <BlockConfig
-                title="Instructions Block"
-                visible={emailContent.visibleBlocks.instructions}
-                onToggle={() => handleToggleBlock('instructions')}
-              >
+                {/* Content Configuration */}
                 <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                      Instructions Title
-                    </label>
-                    <input
-                      type="text"
-                      value={emailContent.instructionsTitle || 'FINAL STEPS & INSTRUCTIONS TO FOLLOW'}
-                      onChange={(e) => handleUpdateContent({ instructionsTitle: e.target.value })}
-                      className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                    />
+                  <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 border-b pb-2">
+                    Content Configuration
+                  </h3>
+
+                  {/* Amount Notification Section */}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Amount Notification</h4>
+                    <div className="space-y-4">
+                      <div>
+                        <label htmlFor="amountNotificationText" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Amount Notification Text (Main Heading)
+                        </label>
+                        <input
+                          type="text"
+                          id="amountNotificationText"
+                          value={emailContent.amountNotificationText || `You have successfully received an additional payment of $${emailContent.recipientAmount}`}
+                          onChange={(e) => setEmailContent({ ...emailContent, amountNotificationText: e.target.value })}
+                          placeholder={`You have successfully received an additional payment of $${emailContent.recipientAmount}`}
+                          className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="recipientAmount" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                            Recipient Amount ($)
+                          </label>
+                          <input
+                            type="text"
+                            id="recipientAmount"
+                            value={emailContent.recipientAmount}
+                            onChange={(e) => setEmailContent({ ...emailContent, recipientAmount: e.target.value })}
+                            placeholder="400.00"
+                            className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="senderName" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                            Sender Name
+                          </label>
+                          <input
+                            type="text"
+                            id="senderName"
+                            value={emailContent.senderName}
+                            onChange={(e) => setEmailContent({ ...emailContent, senderName: e.target.value })}
+                            placeholder="Eric"
+                            className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                      Instructions Content
-                    </label>
-                    <textarea
-                      value={emailContent.instructionsBlock}
-                      onChange={(e) => handleUpdateContent({ instructionsBlock: e.target.value })}
-                      rows={8}
-                      className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                    />
+
+                  {/* Status Section */}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Status</h4>
+                    <div>
+                      <label htmlFor="statusText" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                        Status Text (Purple Box)
+                      </label>
+                      <input
+                        type="text"
+                        id="statusText"
+                        value={emailContent.statusText}
+                        onChange={(e) => setEmailContent({ ...emailContent, statusText: e.target.value })}
+                        placeholder="PENDING"
+                        className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Main Message */}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Main Message</h4>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                        Main Message Content
+                      </label>
+                      <textarea
+                        id="message"
+                        value={emailContent.message}
+                        onChange={(e) => setEmailContent({ ...emailContent, message: e.target.value })}
+                        rows={4}
+                        placeholder="For your account to be credited fully with the sum of $1,000.00..."
+                        className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Instructions Section */}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Instructions</h4>
+                    <div className="space-y-4">
+                      <div>
+                        <label htmlFor="instructionsTitle" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Instructions Title
+                        </label>
+                        <input
+                          type="text"
+                          id="instructionsTitle"
+                          value={emailContent.instructionsTitle || 'FINAL STEPS & INSTRUCTIONS TO FOLLOW'}
+                          onChange={(e) => setEmailContent({ ...emailContent, instructionsTitle: e.target.value })}
+                          placeholder="FINAL STEPS & INSTRUCTIONS TO FOLLOW"
+                          className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="instructionsBlock" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Instructions Content
+                        </label>
+                        <textarea
+                          id="instructionsBlock"
+                          value={emailContent.instructionsBlock}
+                          onChange={(e) => setEmailContent({ ...emailContent, instructionsBlock: e.target.value })}
+                          rows={5}
+                          placeholder="1. Get your Zelle account ready.&#10;2. Ask for the Zelle details from the payment issuer.&#10;3. Send the refund..."
+                          className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Important Notes */}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Important Notes</h4>
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-3 gap-4">
+                        <div>
+                          <label htmlFor="additionalAmount" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                            Additional Amount ($)
+                          </label>
+                          <input
+                            type="text"
+                            id="additionalAmount"
+                            value={emailContent.additionalAmount}
+                            onChange={(e) => setEmailContent({ ...emailContent, additionalAmount: e.target.value })}
+                            placeholder="400.00"
+                            className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="totalAmount" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                            Total Amount ($)
+                          </label>
+                          <input
+                            type="text"
+                            id="totalAmount"
+                            value={emailContent.totalAmount}
+                            onChange={(e) => setEmailContent({ ...emailContent, totalAmount: e.target.value })}
+                            placeholder="1,000.00"
+                            className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="finalAmount" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                            Final Amount ($)
+                          </label>
+                          <input
+                            type="text"
+                            id="finalAmount"
+                            value={emailContent.finalAmount}
+                            onChange={(e) => setEmailContent({ ...emailContent, finalAmount: e.target.value })}
+                            placeholder="2,000.00"
+                            className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label htmlFor="importantNotesBlock" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Important Notes Content
+                        </label>
+                        <textarea
+                          id="importantNotesBlock"
+                          value={emailContent.importantNotesBlock}
+                          onChange={(e) => setEmailContent({ ...emailContent, importantNotesBlock: e.target.value })}
+                          rows={3}
+                          placeholder="IMPORTANT NOTE: $2,000.00 won't reflect into your account yet..."
+                          className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Final Instructions */}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Final Instructions</h4>
+                    <div>
+                      <label htmlFor="finalInstructionsBlock" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                        Final Instructions Content
+                      </label>
+                      <textarea
+                        id="finalInstructionsBlock"
+                        value={emailContent.finalInstructionsBlock}
+                        onChange={(e) => setEmailContent({ ...emailContent, finalInstructionsBlock: e.target.value })}
+                        rows={3}
+                        placeholder="YOUR FUNDS HAS BEEN APPROVED & SECURED BUT YOU ARE REQUIRED TO CARRY ON..."
+                        className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Support Information */}
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-3">Support Information</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label htmlFor="supportText" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Support Text
+                        </label>
+                        <input
+                          type="text"
+                          id="supportText"
+                          value={emailContent.supportText}
+                          onChange={(e) => setEmailContent({ ...emailContent, supportText: e.target.value })}
+                          placeholder="For Assistance, contact the support number below:"
+                          className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="supportNumber" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                          Support Number
+                        </label>
+                        <input
+                          type="text"
+                          id="supportNumber"
+                          value={emailContent.supportNumber}
+                          onChange={(e) => setEmailContent({ ...emailContent, supportNumber: e.target.value })}
+                          placeholder="+1 (336) 310-9279"
+                          className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </BlockConfig>
 
-              {/* Message Block */}
-              <BlockConfig
-                title="Message Block"
-                visible={emailContent.visibleBlocks.message}
-                onToggle={() => handleToggleBlock('message')}
-              >
-                <div>
-                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                    Message Content
-                  </label>
-                  <textarea
-                    value={emailContent.message}
-                    onChange={(e) => handleUpdateContent({ message: e.target.value })}
-                    rows={6}
-                    className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                  />
-                </div>
-              </BlockConfig>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50"
+                >
+                  {loading ? "Sending..." : "Send Email"}
+                </button>
 
-              {/* Important Notes Block */}
-              <BlockConfig
-                title="Important Notes Block"
-                visible={emailContent.visibleBlocks.importantNotes}
-                onToggle={() => handleToggleBlock('importantNotes')}
-              >
-                <div>
-                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                    Important Notes Content
-                  </label>
-                  <textarea
-                    value={`IMPORTANT NOTE: $${emailContent.finalAmount} won't reflect into your account yet until you have carried on with the instructions given above.
-
-Once the refund is complete, $${emailContent.totalAmount} will reflect in your account immediately.`}
-                    onChange={(e) => handleUpdateContent({ importantNotesBlock: e.target.value })}
-                    rows={6}
-                    className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                  />
-                </div>
-              </BlockConfig>
-
-              {/* Final Instructions Block */}
-              <BlockConfig
-                title="Final Instructions Block"
-                visible={emailContent.visibleBlocks.finalInstructions}
-                onToggle={() => handleToggleBlock('finalInstructions')}
-              >
-                <div>
-                  <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                    Final Instructions Content
-                  </label>
-                  <textarea
-                    value={`YOUR FUNDS HAS BEEN APPROVED & SECURED BUT YOU ARE REQUIRED TO CARRY ON AND FOLLOW THE GIVEN INSTRUCTION ABOVE FOR YOUR ACCOUNT TO BE FULLY CREDITED WITH THE TOTAL SUM OF $${emailContent.totalAmount} IMMEDIATELY.`}
-                    onChange={(e) => handleUpdateContent({ finalInstructionsBlock: e.target.value })}
-                    rows={4}
-                    className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                  />
-                </div>
-              </BlockConfig>
-
-              {/* Support Block */}
-              <BlockConfig
-                title="Support Block"
-                visible={emailContent.visibleBlocks.support}
-                onToggle={() => handleToggleBlock('support')}
-              >
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                      Support Text
-                    </label>
-                    <input
-                      type="text"
-                      value={emailContent.supportText}
-                      onChange={(e) => handleUpdateContent({ supportText: e.target.value })}
-                      className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                      Support Number
-                    </label>
-                    <input
-                      type="text"
-                      value={emailContent.supportNumber}
-                      onChange={(e) => handleUpdateContent({ supportNumber: e.target.value })}
-                      className="w-full p-2 border dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                    />
-                  </div>
-                </div>
-              </BlockConfig>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50"
-              >
-                {loading ? "Sending..." : "Send Email"}
-              </button>
-
-              {status === "success" && (
-                <p className="text-green-600 text-center">Email sent successfully!</p>
-              )}
-              {status === "error" && (
-                <p className="text-red-600 text-center">Failed to send email. Please try again.</p>
-              )}
-            </form>
+                {status === "success" && (
+                  <p className="text-green-600 text-center">Email sent successfully!</p>
+                )}
+                {status === "error" && (
+                  <p className="text-red-600 text-center">Failed to send email. Please try again.</p>
+                )}
+              </form>
+            </div>
           </div>
         </div>
       </div>

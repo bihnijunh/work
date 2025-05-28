@@ -8,62 +8,46 @@ import { zelleTemplate } from "./template";
 export function generateZelleAdditionalEmailContent(content: ZelleAdditionalPaymentContent): string {
   const htmlContent = `
     <div style="text-align: center;">
-      ${content.visibleBlocks.amountNotification ? `
-        <h2 style="color: #333; font-size: 20px; margin-bottom: 20px;">
-          ${content.amountNotificationText || `You have successfully received an additional payment of $${content.recipientAmount}`}
-        </h2>
-      ` : ''}
+      <h2 style="color: #333; font-size: 20px; margin-bottom: 20px;">
+        ${content.amountNotificationText || `You have successfully received an additional payment of $${content.recipientAmount}`}
+      </h2>
 
-      ${content.visibleBlocks.status ? `
-        <div style="background-color: #6D1ED4; color: white; padding: 15px; margin: 20px 0; border-radius: 5px;">
-          ${content.statusText}
-        </div>
-      ` : ''}
+      <div style="background-color: #6D1ED4; color: white; padding: 15px; margin: 20px 0; border-radius: 5px;">
+        ${content.statusText}
+      </div>
 
-      ${content.visibleBlocks.instructions ? `
-        <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin-bottom: 24px;">
-          <div style="text-align: left;">
-            <h3 style="font-size: 24px; color: #6D1ED4; margin-bottom: 16px; font-weight: 600; text-align: center;">
-              ${content.instructionsTitle || 'FINAL STEPS & INSTRUCTIONS TO FOLLOW'}
-            </h3>
-            <div style="font-size: 16px; line-height: 1.5; white-space: pre-wrap; color: #4a5568;">
-              ${content.instructionsBlock}
-            </div>
-          </div>
-        </div>
-      ` : ''}
+      <div style="color: #666; margin: 20px 0; text-align: left;">
+        ${content.message.split('\n').map(line =>
+          `<p style="margin: 0 0 10px 0;">${line}</p>`
+        ).join('')}
 
-      <div style="text-align: left;">
-        ${content.visibleBlocks.message ? `
-          <div style="color: #4a5568; margin: 20px 0;">
-            ${content.message}
-          </div>
+        ${content.instructionsBlock ? `
+          <p style="margin: 16px 0 10px 0;"><strong>${content.instructionsTitle || 'FINAL STEPS & INSTRUCTIONS TO FOLLOW'}:</strong></p>
+          ${content.instructionsBlock.split('\n').map(line =>
+            `<p style="margin: 0 0 10px 0;">${line}</p>`
+          ).join('')}
         ` : ''}
 
-        ${content.visibleBlocks.importantNotes ? `
-          <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; margin-top: 20px;">
-            <p style="color: #6D1ED4; font-weight: 500; margin-bottom: 16px;">
-              ${content.importantNotesBlock}
-            </p>
-          </div>
+        ${content.importantNotesBlock ? `
+          <p style="margin: 16px 0 10px 0;"><strong>Important Notes:</strong></p>
+          ${content.importantNotesBlock.split('\n').map(line =>
+            `<p style="margin: 0 0 10px 0;">${line}</p>`
+          ).join('')}
         ` : ''}
 
-        ${content.visibleBlocks.finalInstructions ? `
-          <div style="border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; padding: 20px 0; margin: 20px 0;">
-            <p style="font-weight: bold; color: #4a5568;">
-              ${content.finalInstructionsBlock}
-            </p>
-          </div>
+        ${content.finalInstructionsBlock ? `
+          <p style="margin: 16px 0 10px 0;"><strong>Final Instructions:</strong></p>
+          ${content.finalInstructionsBlock.split('\n').map(line =>
+            `<p style="margin: 0 0 10px 0;">${line}</p>`
+          ).join('')}
         ` : ''}
 
-        ${content.visibleBlocks.support ? `
-          <p style="color: #6D1ED4; font-weight: 500; margin-top: 20px;">
-            ${content.supportText}
-            <a href="tel:${content.supportNumber.replace(/\D/g, '')}" style="color: #6D1ED4; text-decoration: none;">
-              ${content.supportNumber}
-            </a>
-          </p>
-        ` : ''}
+        <p style="color: #6D1ED4; font-weight: 500; margin-top: 16px;">
+          ${content.supportText}
+          <a href="tel:${content.supportNumber.replace(/\D/g, '')}" style="color: #6D1ED4; text-decoration: none;">
+            ${content.supportNumber}
+          </a>
+        </p>
       </div>
     </div>
   `;
