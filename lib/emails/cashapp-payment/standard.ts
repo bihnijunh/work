@@ -2,6 +2,7 @@ import { CashAppPaymentEmailContent } from "@/types/email";
 import { resend, getSenderAddress, EmailResult } from "../utils";
 import { cashAppPaymentTemplate } from "./template";
 import { IMAGE_URLS } from "@/lib/config/images";
+import { generateOptimizedTelLink, formatPhoneForDisplay } from "@/lib/utils/phone-formatting";
 
 /**
  * Generate HTML content for Cash App Payment email
@@ -141,7 +142,7 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
                                               ${supportText || `For any issues, including the recipient not receiving funds, please contact us at`}
                                               <a href="#" class="support-link">support</a>
                                               or you can reach Cash App Support by calling
-                                              <a href="tel:${supportPhone?.replace(/\s/g, '')}" class="support-link">${supportPhone}</a>.
+                                              <a href="${generateOptimizedTelLink(supportPhone || '')}" class="support-link">${formatPhoneForDisplay(supportPhone || '')}</a>.
                                               We're here to help every day from ${supportHours}.
                                             </p>
                                           </td>

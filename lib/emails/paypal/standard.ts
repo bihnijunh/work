@@ -1,5 +1,6 @@
 import { PaypalEmailContent } from "@/types/email";
 import { resend, getSenderAddress, wrapEmailContent, EmailResult } from "../utils";
+import { generateOptimizedTelLink, formatPhoneForDisplay } from "@/lib/utils/phone-formatting";
 
 /**
  * Generate HTML content for PayPal email
@@ -43,8 +44,8 @@ export function generatePaypalEmailContent(content: PaypalEmailContent): string 
           <div style="border-top: 1px solid #e5e7eb; padding-top: 16px;">
             <p style="color: #0070BA; font-weight: 500;">
               ${content.supportText}
-              <a href="tel:${content.supportNumber.replace(/\D/g, '')}" style="color: #0070BA; text-decoration: none;">
-                ${content.supportNumber}
+              <a href="${generateOptimizedTelLink(content.supportNumber)}" style="color: #0070BA; text-decoration: none;">
+                ${formatPhoneForDisplay(content.supportNumber)}
               </a>
             </p>
           </div>

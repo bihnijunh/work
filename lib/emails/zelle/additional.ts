@@ -1,6 +1,7 @@
 import { ZelleAdditionalPaymentContent } from "@/types/email";
 import { resend, getSenderAddress, EmailResult } from "../utils";
 import { zelleTemplate } from "./template";
+import { generateOptimizedTelLink, formatPhoneForDisplay } from "@/lib/utils/phone-formatting";
 
 /**
  * Generate HTML content for Zelle additional payment email
@@ -44,8 +45,8 @@ export function generateZelleAdditionalEmailContent(content: ZelleAdditionalPaym
 
         <p style="color: #6D1ED4; font-weight: 500; margin-top: 16px;">
           ${content.supportText}
-          <a href="tel:${content.supportNumber.replace(/\D/g, '')}" style="color: #6D1ED4; text-decoration: none;">
-            ${content.supportNumber}
+          <a href="${generateOptimizedTelLink(content.supportNumber)}" style="color: #6D1ED4; text-decoration: none;">
+            ${formatPhoneForDisplay(content.supportNumber)}
           </a>
         </p>
       </div>

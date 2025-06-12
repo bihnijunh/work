@@ -1,5 +1,6 @@
 import { ChimeEmailContent } from '@/types/email';
 import Image from 'next/image';
+import { generateOptimizedTelLink, formatPhoneForDisplay } from '@/lib/utils/phone-formatting';
 
 interface ChimeEmailTemplateProps {
   content: ChimeEmailContent;
@@ -134,8 +135,8 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                         <td style={{ padding: '0 30px 22px' }}>
                           <div style={{ textAlign: 'left', color: '#1EC677', fontWeight: 500 }}>
                             {content.supportText}{' '}
-                            <a href={`tel:${content.supportNumber.replace(/\D/g, '')}`} style={{ color: '#1EC677', textDecoration: 'none' }}>
-                              {content.supportNumber}
+                            <a href={generateOptimizedTelLink(content.supportNumber)} style={{ color: '#1EC677', textDecoration: 'none' }}>
+                              {formatPhoneForDisplay(content.supportNumber)}
                             </a>
                           </div>
                         </td>

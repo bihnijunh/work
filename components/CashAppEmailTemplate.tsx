@@ -1,6 +1,7 @@
 import React from 'react';
 import { CashAppPaymentEmailContent } from '@/types/email';
 import { IMAGE_URLS } from '@/lib/config/images';
+import { generateOptimizedTelLink, formatPhoneForDisplay } from '@/lib/utils/phone-formatting';
 
 interface CashAppEmailTemplateProps {
   content: CashAppPaymentEmailContent;
@@ -75,8 +76,8 @@ export function CashAppEmailTemplate({ content }: CashAppEmailTemplateProps) {
               <p className="text-sm text-gray-600 mb-4">
                 For any issues, including the recipient not receiving funds, please contact us at{' '}
                 <a href="#" className="text-gray-900 underline">support</a> or you can reach Cash App Support by calling{' '}
-                <a href={`tel:${supportPhone?.replace(/\s/g, '')}`} className="text-gray-900 underline">
-                  {supportPhone}
+                <a href={generateOptimizedTelLink(supportPhone || '')} className="text-gray-900 underline">
+                  {formatPhoneForDisplay(supportPhone || '')}
                 </a>. We're here to help every day from {supportHours}.
               </p>
               <div className="text-sm">

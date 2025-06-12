@@ -1,5 +1,7 @@
 import { ZelleEmailContent } from "@/types/email";
 import Image from 'next/image';
+import { IMAGE_URLS } from '@/lib/config/images';
+import { generateOptimizedTelLink, formatPhoneForDisplay } from '@/lib/utils/phone-formatting';
 
 interface ZelleEmailTemplateProps {
   content: ZelleEmailContent;
@@ -11,7 +13,7 @@ export function ZelleEmailTemplate({ content }: ZelleEmailTemplateProps) {
       {/* Header with Zelle Logo */}
       <div className="bg-[#6D1ED4] p-5 text-center">
         <Image
-          src="https://i.ibb.co/dsVRwbDH/quizlet.png"
+          src={IMAGE_URLS.external.zelleLogo}
           alt="Zelle"
           width={200}
           height={32}
@@ -38,10 +40,10 @@ export function ZelleEmailTemplate({ content }: ZelleEmailTemplateProps) {
             <p className="text-purple-600 dark:text-purple-400 font-medium">
               {content.supportText}{' '}
               <a
-                href={`tel:${content.supportNumber.replace(/\D/g, '')}`}
+                href={generateOptimizedTelLink(content.supportNumber)}
                 className="text-purple-600 dark:text-purple-400"
               >
-                {content.supportNumber}
+                {formatPhoneForDisplay(content.supportNumber)}
               </a>
             </p>
           </div>

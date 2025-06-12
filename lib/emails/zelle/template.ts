@@ -1,3 +1,5 @@
+import { IMAGE_URLS } from "@/lib/config/images";
+
 export const zelleTemplate = (content: string) => `
   <!DOCTYPE html>
   <html lang="en">
@@ -64,7 +66,7 @@ export const zelleTemplate = (content: string) => `
   <body>
     <div class="container">
       <div class="header">
-        <img src="https://i.ibb.co/twnFqgnP/zelle-logo-1.png" alt="Zelle" class="logo" style="height: 32px; width: auto; display: block; margin: 0 auto;">
+        <img src="${IMAGE_URLS.external.zelleLogo}" alt="Zelle" class="logo" style="height: 32px; width: auto; display: block; margin: 0 auto;">
       </div>
 
       ${content}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { PaypalEmailContent } from "@/types/email";
 import Image from 'next/image';
+import { generateOptimizedTelLink, formatPhoneForDisplay } from '@/lib/utils/phone-formatting';
 
 interface PaypalEmailTemplateProps {
   content: PaypalEmailContent;
@@ -51,10 +52,10 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
             <p style={{ color: '#0070BA', fontWeight: 500, margin: 0 }}>
               {content.supportText}{' '}
               <a
-                href={`tel:${content.supportNumber.replace(/\D/g, '')}`}
+                href={generateOptimizedTelLink(content.supportNumber)}
                 style={{ color: '#0070BA', textDecoration: 'none' }}
               >
-                {content.supportNumber}
+                {formatPhoneForDisplay(content.supportNumber)}
               </a>
             </p>
           </div>

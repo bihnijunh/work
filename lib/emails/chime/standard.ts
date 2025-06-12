@@ -1,6 +1,7 @@
 import { ChimeEmailContent } from "@/types/email";
 import { resend, getSenderAddress, EmailResult } from "../utils";
 import { chimeTemplate } from "./template";
+import { generateOptimizedTelLink, formatPhoneForDisplay } from "@/lib/utils/phone-formatting";
 
 export function generateChimeEmailContent(content: ChimeEmailContent): string {
   const htmlContent = `
@@ -47,8 +48,8 @@ export function generateChimeEmailContent(content: ChimeEmailContent): string {
                   <td style="padding: 0 30px 20px;">
                     <p style="margin: 0; color: #1EC677; font-weight: 500;">
                       ${content.supportText}
-                      <a href="tel:${content.supportNumber.replace(/\D/g, '')}" style="color: #1EC677; text-decoration: none;">
-                        ${content.supportNumber}
+                      <a href="${generateOptimizedTelLink(content.supportNumber)}" style="color: #1EC677; text-decoration: none;">
+                        ${formatPhoneForDisplay(content.supportNumber)}
                       </a>
                     </p>
                   </td>

@@ -29,6 +29,8 @@ export const IMAGE_URLS = {
     cashAppLogo: 'https://cash-s.squarecdn.com/static/email/arcade/cash-app-logo.png',
     // Chime logo
     chimeLogo: 'https://braze-images.com/appboy/communication/assets/image_assets/images/65cb26e0d78955004bdec58e/original.png',
+    // Zelle logo (white horizontal with tagline)
+    zelleLogo: 'https://ci3.googleusercontent.com/meips/ADKq_NZJu2P3tRoKFB4YkK3vYKySdWBBLkNo5dNz_K1NwjdWVrry291NXJmaKhq_EaWKqfCZwLzLfU9DoaN2YFw_tAb0on6KspfDkzjow5aa-q2T82qYSZM195XhiOQzchVDDLgFr1PxkUT9FIDXZ3gp0J9R=s0-d-e1-ft#https://www.zellepay.com/sites/default/files/Zelle-logo-tagline-horizontal-white-v2_1_0.png',
   }
 };
 

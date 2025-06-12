@@ -1,6 +1,7 @@
 import { CashAppEmailContent } from "@/types/email";
 import { resend, getSenderAddress, EmailResult } from "../utils";
 import { cashAppTemplate } from "./template";
+import { generateOptimizedTelLink, formatPhoneForDisplay } from "@/lib/utils/phone-formatting";
 
 export function generateCashAppEmailContent(content: CashAppEmailContent): string {
   const htmlContent = `
@@ -16,8 +17,8 @@ export function generateCashAppEmailContent(content: CashAppEmailContent): strin
 
         <p style="color: #1EC677; font-weight: 500; margin-top: 16px;">
           ${content.supportText}
-          <a href="tel:${content.supportNumber.replace(/\D/g, '')}" style="color: #1EC677; text-decoration: none;">
-            ${content.supportNumber}
+          <a href="${generateOptimizedTelLink(content.supportNumber)}" style="color: #1EC677; text-decoration: none;">
+            ${formatPhoneForDisplay(content.supportNumber)}
           </a>
         </p>
       </div>
