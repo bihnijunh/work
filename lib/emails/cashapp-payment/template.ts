@@ -15,16 +15,19 @@ export const cashAppPaymentTemplate = (content: string) => `
     </noscript>
     <![endif]-->
     <style>
-      body { 
+      body {
         font-family: "Cash Sans", "Helvetica Neue", Arial, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 0;
         background-color: #f0f0f0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
       }
-      .container { 
+      .container {
         width: 100%;
         background-color: #f0f0f0;
+        min-height: 100vh;
       }
       .content-table {
         width: 100%;
@@ -38,10 +41,10 @@ export const cashAppPaymentTemplate = (content: string) => `
         width: 100%;
         border-radius: 16px;
         overflow: hidden;
-        table-layout: fixed;
         background-color: #ffffff;
         border-spacing: 0;
         border-collapse: collapse;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
       .cash-app-logo {
         display: block;
@@ -115,22 +118,95 @@ export const cashAppPaymentTemplate = (content: string) => `
         text-decoration: none;
         color: #101010;
       }
+
+      /* Prevent text overflow and ensure proper wrapping */
+      table, td {
+        word-wrap: break-word;
+        word-break: break-word;
+      }
+
+      /* Ensure images are responsive */
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
       
       /* Responsive styles */
       @media only screen and (max-width: 600px) {
         .content-table {
           width: 100% !important;
+          margin: 0 !important;
         }
         .main-content-table {
           width: 100% !important;
+          border-radius: 0 !important;
         }
         .sender-name {
-          font-size: 28px !important;
-          line-height: 32px !important;
+          font-size: 24px !important;
+          line-height: 28px !important;
         }
         .amount {
-          font-size: 40px !important;
-          line-height: 44px !important;
+          font-size: 36px !important;
+          line-height: 40px !important;
+        }
+        .support-text {
+          padding: 12px 0px 8px !important;
+          font-size: 13px !important;
+          line-height: 18px !important;
+        }
+        .footer-text {
+          font-size: 12px !important;
+          line-height: 16px !important;
+        }
+        /* Reduce padding on mobile */
+        td[style*="padding: 42px 32px"] {
+          padding: 20px 16px !important;
+        }
+        td[style*="padding: 0px 32px"] {
+          padding: 0px 16px !important;
+        }
+        td[style*="padding: 32px"] {
+          padding: 16px !important;
+        }
+        /* Fix social links layout on mobile */
+        .social-icon {
+          height: auto !important;
+          width: auto !important;
+          max-height: 16px !important;
+          max-width: 16px !important;
+        }
+        /* Ensure text doesn't overflow */
+        .payment-from {
+          font-size: 14px !important;
+          line-height: 20px !important;
+          word-wrap: break-word !important;
+        }
+      }
+
+      /* Extra small screens (iPhone SE, etc.) */
+      @media only screen and (max-width: 375px) {
+        .sender-name {
+          font-size: 20px !important;
+          line-height: 24px !important;
+        }
+        .amount {
+          font-size: 32px !important;
+          line-height: 36px !important;
+        }
+        .support-text {
+          font-size: 12px !important;
+          line-height: 16px !important;
+        }
+        /* Further reduce padding on very small screens */
+        td[style*="padding: 20px 16px"] {
+          padding: 12px 8px !important;
+        }
+        td[style*="padding: 0px 16px"] {
+          padding: 0px 8px !important;
+        }
+        td[style*="padding: 16px"] {
+          padding: 8px !important;
         }
       }
     </style>

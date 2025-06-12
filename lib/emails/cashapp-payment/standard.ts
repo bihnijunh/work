@@ -49,19 +49,15 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
   const profileImageWithFallback = `${profileImageUrl}" onerror="this.src='${fallbackProfileImage}'`;
 
   const htmlContent = `
-    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="content-table">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="content-table" style="max-width: 640px; margin: 0 auto;">
       <tbody>
         <tr>
-          <td></td>
-          <td align="center" width="640">
-            <table width="100%" cellspacing="0" cellpadding="0" border="0" class="main-content-table">
+          <td align="center" style="padding: 0 10px;">
+            <table width="100%" cellspacing="0" cellpadding="0" border="0" class="main-content-table" style="max-width: 620px;">
               <tbody>
                 ${visibleBlocks.header ? `
                 <tr>
-                  <td style="padding: 0px 24px;"></td>
-                </tr>
-                <tr>
-                  <td style="padding: 42px 32px;" height="48" width="120">
+                  <td style="padding: 24px 16px;" height="48" width="120">
                     <img src="https://cash-s.squarecdn.com/static/email/arcade/cash-app-logo.png"
                          alt="Cash App Logo"
                          height="48"
@@ -72,11 +68,11 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
                 ` : ''}
 
                 <tr>
-                  <td width="100%" align="center" style="padding: 0px 32px;">
+                  <td width="100%" align="center" style="padding: 0px 16px;">
                     <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" class="main-content-table">
                       <tbody>
                         <tr>
-                          <td style="padding: 0px 32px;" width="100%">
+                          <td style="padding: 0px 16px;" width="100%">
                             <table width="100%" cellspacing="0" cellpadding="0" border="0">
                               <tbody>
                                 <tr>
@@ -242,7 +238,7 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
 
                 ${visibleBlocks.footer ? `
                 <tr>
-                  <td align="center" style="padding: 32px;">
+                  <td align="center" style="padding: 16px;">
                     <table width="100%" cellspacing="0" cellpadding="0" border="0">
                       <tbody>
                         <tr>
@@ -266,7 +262,6 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
               </tbody>
             </table>
           </td>
-          <td></td>
         </tr>
       </tbody>
     </table>
