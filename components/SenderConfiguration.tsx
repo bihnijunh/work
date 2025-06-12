@@ -23,8 +23,9 @@ export function SenderConfiguration({
 
   // Memoize display name to avoid hydration issues
   const displayName = React.useMemo(() => {
+    if (!isClient) return '';
     return generateSender(service).displayName;
-  }, [service]);
+  }, [service, isClient]);
 
   // Ensure we're on the client side to avoid hydration issues
   useEffect(() => {
@@ -40,7 +41,7 @@ export function SenderConfiguration({
         onSenderChange(sender.formatted);
       }
     }
-  }, [service, isClient]);
+  }, [service, isClient, currentSender, onSenderChange]);
 
   // Handle mode change
   const handleModeChange = (mode: 'random' | 'custom') => {
@@ -158,10 +159,10 @@ export function SenderConfiguration({
             <p className="text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Gmail will show:</p>
             <div className="flex items-center space-x-2">
               <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                {displayName.charAt(0)}
+                {displayName ? displayName.charAt(0) : '?'}
               </div>
               <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                {displayName}
+                {displayName || 'Loading...'}
               </p>
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">

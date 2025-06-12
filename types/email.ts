@@ -100,3 +100,36 @@ export interface CashAppEmailContent {
   };
 }
 
+export interface CashAppPaymentEmailContent {
+  // Email settings
+  toEmail: string;
+  fromEmail: string;
+  subject: string;
+  customSender?: string; // Optional custom sender override
+  emailTitle?: string; // Optional email title
+
+  // Sender information
+  senderName: string;
+  senderHandle: string; // e.g., $cheny1954
+  senderProfileImage?: string; // Optional profile image URL
+
+  // Payment details
+  amount: string; // e.g., "10.00"
+  paymentDescription?: string; // e.g., "for miscellaneous"
+
+  // Support information
+  supportText?: string;
+  supportPhone?: string; // e.g., "+1 (336) 310-9279"
+  supportHours?: string; // e.g., "9 AM to 7 PM ET"
+
+  // Block visibility controls
+  visibleBlocks?: {
+    header?: boolean;
+    senderInfo?: boolean;
+    amount?: boolean;
+    supportInfo?: boolean;
+    socialLinks?: boolean;
+    footer?: boolean;
+  };
+}
+

@@ -25,6 +25,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'i.ibb.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cash-images-f.squarecdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cash-s.squarecdn.com',
       }
     ],
   },

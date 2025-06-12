@@ -28,3 +28,102 @@ main {
 html {
   scroll-behavior: smooth;
 }
+
+/* Mobile optimizations for iPhone and other devices */
+@media screen and (max-width: 768px) {
+  /* Improve touch targets */
+  button, input, select, textarea {
+    min-height: 44px; /* Apple's recommended minimum touch target size */
+  }
+
+  /* Better spacing on mobile */
+  .p-8 {
+    padding: 1rem;
+  }
+
+  /* Responsive grid adjustments */
+  .grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Better form spacing on mobile */
+  .space-y-6 > * + * {
+    margin-top: 1rem;
+  }
+
+  .space-y-4 > * + * {
+    margin-top: 0.75rem;
+  }
+
+  /* Improve text readability on mobile */
+  .text-xl {
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+
+  /* Better button sizing on mobile */
+  .w-full {
+    width: 100%;
+  }
+
+  /* Improve form input sizing */
+  input, textarea, select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.75rem;
+  }
+}
+
+/* iPhone specific optimizations */
+@media screen and (max-width: 480px) {
+  /* Even more compact spacing for small screens */
+  .max-w-6xl {
+    max-width: 100%;
+    margin: 0;
+    padding: 0 0.5rem;
+  }
+
+  /* Stack elements vertically on very small screens */
+  .grid.grid-cols-2.md\:grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Better modal/popup sizing */
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+
+  /* Improve checkbox and radio button sizing */
+  input[type="checkbox"], input[type="radio"] {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Fix for iOS Safari viewport issues */
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Prevent horizontal scrolling on mobile */
+body {
+  overflow-x: hidden;
+}
+
+/* Better focus states for accessibility */
+button:focus, input:focus, textarea:focus, select:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Improve dark mode contrast on mobile */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+  .bg-gray-800 {
+    background-color: #1f2937;
+  }
+
+  .text-gray-300 {
+    color: #d1d5db;
+  }
+}

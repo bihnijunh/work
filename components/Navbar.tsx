@@ -32,6 +32,11 @@ export function Navbar() {
       href: '/chime',
       isActive: pathname?.startsWith('/chime'),
     },
+    {
+      title: 'Cash App Template',
+      href: '/cashapp',
+      isActive: pathname?.startsWith('/cashapp'),
+    },
   ];
 
   return (
