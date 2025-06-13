@@ -1,7 +1,7 @@
 import { CashAppPaymentEmailContent } from "@/types/email";
 import { resend, getSenderAddress, EmailResult } from "../utils";
 import { cashAppPaymentTemplate } from "./template";
-import { IMAGE_URLS } from "@/lib/config/images";
+import { IMAGE_URLS, getCashAppLogo, getCashAppSocialIcon } from "@/lib/config/images";
 import { generateOptimizedTelLink, formatPhoneForDisplay } from "@/lib/utils/phone-formatting";
 
 /**
@@ -31,6 +31,13 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
   const githubProfileImage = IMAGE_URLS.profiles.mariaElena;
   const fallbackProfileImage = IMAGE_URLS.external.cashAppProfile;
 
+  // Get Cash App logo and social icons with fallback support
+  const cashAppLogo = getCashAppLogo();
+  const twitterIcon = getCashAppSocialIcon('twitter');
+  const instagramIcon = getCashAppSocialIcon('instagram');
+  const twitchIcon = getCashAppSocialIcon('twitch');
+  const tiktokIcon = getCashAppSocialIcon('tiktok');
+
   // Validate and use profile image with fallback
   let profileImageUrl = githubProfileImage;
   if (senderProfileImage) {
@@ -58,11 +65,12 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
                 ${visibleBlocks.header ? `
                 <tr>
                   <td style="padding: 24px 16px;" height="48" width="120">
-                    <img src="https://cash-s.squarecdn.com/static/email/arcade/cash-app-logo.png"
+                    <img src="${cashAppLogo.primary}"
                          alt="Cash App Logo"
                          height="48"
                          width="120"
-                         class="cash-app-logo">
+                         class="cash-app-logo"
+                         onerror="this.src='${cashAppLogo.fallback}'">
                   </td>
                 </tr>
                 ` : ''}
@@ -163,11 +171,12 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
                                       <tbody>
                                         <tr>
                                           <td height="48" width="120">
-                                            <img src="https://cash-s.squarecdn.com/static/email/arcade/cash-app-logo.png"
+                                            <img src="${cashAppLogo.primary}"
                                                  alt="Cash App Logo"
                                                  height="48"
                                                  width="120"
-                                                 class="cash-app-logo">
+                                                 class="cash-app-logo"
+                                                 onerror="this.src='${cashAppLogo.fallback}'">
                                           </td>
                                           <td align="right" valign="middle">
                                             <table>
@@ -180,37 +189,41 @@ export function generateCashAppPaymentEmailContent(content: CashAppPaymentEmailC
                                                           <td valign="top" height="17" width="17" style="padding-right: 40px;">
                                                             <a href="https://twitter.com/CashApp">
                                                               <img alt="Twitter"
-                                                                   src="https://cash-s.squarecdn.com/static/email/arcade/x.png"
+                                                                   src="${twitterIcon.primary}"
                                                                    height="17"
                                                                    width="17"
-                                                                   class="social-icon">
+                                                                   class="social-icon"
+                                                                   onerror="this.src='${twitterIcon.fallback}'">
                                                             </a>
                                                           </td>
                                                           <td valign="top" height="18" width="18" style="padding-right: 40px;">
                                                             <a href="https://www.instagram.com/cashapp">
                                                               <img alt="Instagram"
-                                                                   src="https://cash-s.squarecdn.com/static/email/arcade/instagram.png"
+                                                                   src="${instagramIcon.primary}"
                                                                    height="18"
                                                                    width="18"
-                                                                   class="social-icon">
+                                                                   class="social-icon"
+                                                                   onerror="this.src='${instagramIcon.fallback}'">
                                                             </a>
                                                           </td>
                                                           <td valign="top" height="20" width="19" style="padding-right: 40px;">
                                                             <a href="https://www.twitch.tv/cashapp">
                                                               <img alt="Twitch"
-                                                                   src="https://cash-s.squarecdn.com/static/email/arcade/twitch.png"
+                                                                   src="${twitchIcon.primary}"
                                                                    height="20"
                                                                    width="19"
-                                                                   class="social-icon">
+                                                                   class="social-icon"
+                                                                   onerror="this.src='${twitchIcon.fallback}'">
                                                             </a>
                                                           </td>
                                                           <td valign="top" height="18" width="16">
                                                             <a href="https://www.tiktok.com/@cashapp">
                                                               <img alt="Tiktok"
-                                                                   src="https://cash-s.squarecdn.com/static/email/arcade/tiktok.png"
+                                                                   src="${tiktokIcon.primary}"
                                                                    height="18"
                                                                    width="16"
-                                                                   class="social-icon">
+                                                                   class="social-icon"
+                                                                   onerror="this.src='${tiktokIcon.fallback}'">
                                                             </a>
                                                           </td>
                                                         </tr>

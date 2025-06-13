@@ -1,6 +1,6 @@
 import React from 'react';
 import { CashAppPaymentEmailContent } from '@/types/email';
-import { IMAGE_URLS } from '@/lib/config/images';
+import { IMAGE_URLS, getCashAppLogo, getCashAppSocialIcon } from '@/lib/config/images';
 import { generateOptimizedTelLink, formatPhoneForDisplay } from '@/lib/utils/phone-formatting';
 
 interface CashAppEmailTemplateProps {
@@ -33,15 +33,26 @@ export function CashAppEmailTemplate({ content }: CashAppEmailTemplateProps) {
   // For preview component, we can use either the hosted URL or base64, with fallback to GitHub hosted
   const profileImageSrc = senderProfileImage || githubProfileImage;
 
+  // Get Cash App logo and social icons with fallback support
+  const cashAppLogo = getCashAppLogo();
+  const twitterIcon = getCashAppSocialIcon('twitter');
+  const instagramIcon = getCashAppSocialIcon('instagram');
+  const twitchIcon = getCashAppSocialIcon('twitch');
+  const tiktokIcon = getCashAppSocialIcon('tiktok');
+
   return (
     <div className="bg-gray-100 p-4 rounded-lg max-w-2xl mx-auto">
       <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
         {visibleBlocks.header && (
           <div className="p-8 pb-4">
             <img
-              src="https://cash-s.squarecdn.com/static/email/arcade/cash-app-logo.png"
+              src={cashAppLogo.primary}
               alt="Cash App Logo"
               className="h-12 w-30"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = cashAppLogo.fallback;
+              }}
             />
           </div>
         )}
@@ -90,26 +101,62 @@ export function CashAppEmailTemplate({ content }: CashAppEmailTemplateProps) {
           {visibleBlocks.socialLinks && (
             <div className="flex justify-between items-center mb-8">
               <img
-                src="https://cash-s.squarecdn.com/static/email/arcade/cash-app-logo.png"
+                src={cashAppLogo.primary}
                 alt="Cash App Logo"
                 className="h-12 w-30"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = cashAppLogo.fallback;
+                }}
               />
               <div className="flex space-x-8">
                 <a href="https://twitter.com/CashApp" className="text-gray-600 hover:text-gray-900">
                   <span className="sr-only">Twitter</span>
-                  <div className="w-4 h-4 bg-gray-400 rounded"></div>
+                  <img
+                    src={twitterIcon.primary}
+                    alt="Twitter"
+                    className="w-4 h-4"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = twitterIcon.fallback;
+                    }}
+                  />
                 </a>
                 <a href="https://www.instagram.com/cashapp" className="text-gray-600 hover:text-gray-900">
                   <span className="sr-only">Instagram</span>
-                  <div className="w-4 h-4 bg-gray-400 rounded"></div>
+                  <img
+                    src={instagramIcon.primary}
+                    alt="Instagram"
+                    className="w-4 h-4"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = instagramIcon.fallback;
+                    }}
+                  />
                 </a>
                 <a href="https://www.twitch.tv/cashapp" className="text-gray-600 hover:text-gray-900">
                   <span className="sr-only">Twitch</span>
-                  <div className="w-4 h-4 bg-gray-400 rounded"></div>
+                  <img
+                    src={twitchIcon.primary}
+                    alt="Twitch"
+                    className="w-4 h-4"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = twitchIcon.fallback;
+                    }}
+                  />
                 </a>
                 <a href="https://www.tiktok.com/@cashapp" className="text-gray-600 hover:text-gray-900">
                   <span className="sr-only">TikTok</span>
-                  <div className="w-4 h-4 bg-gray-400 rounded"></div>
+                  <img
+                    src={tiktokIcon.primary}
+                    alt="TikTok"
+                    className="w-4 h-4"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = tiktokIcon.fallback;
+                    }}
+                  />
                 </a>
               </div>
             </div>

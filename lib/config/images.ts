@@ -20,13 +20,33 @@ export const IMAGE_URLS = {
     // Default fallback profile
     default: `${GITHUB_BASE_URL}/profiles/maria-elena-rodriguez.jpeg`,
   },
-  
-  // External CDN URLs (keep these for authenticity and reliability)
+
+  // Logos hosted on GitHub
+  logos: {
+    // Cash App logo - downloaded from Cash App CDN
+    cashApp: `${GITHUB_BASE_URL}/logos/cashapp-logo.png`,
+  },
+
+  // Social media icons hosted on GitHub
+  social: {
+    // Social media icons - downloaded from Cash App CDN
+    twitter: `${GITHUB_BASE_URL}/social/x.png`,
+    instagram: `${GITHUB_BASE_URL}/social/instagram.png`,
+    twitch: `${GITHUB_BASE_URL}/social/twitch.png`,
+    tiktok: `${GITHUB_BASE_URL}/social/tiktok.png`,
+  },
+
+  // External CDN URLs (keep these for authenticity and reliability as fallbacks)
   external: {
     // Original Cash App CDN URL (as fallback)
     cashAppProfile: 'https://cash-images-f.squarecdn.com/apps/imgs/P8Ick4Us9UicmB66kcUQxC.jpeg?width=120',
-    // Cash App logo
+    // Cash App logo (fallback)
     cashAppLogo: 'https://cash-s.squarecdn.com/static/email/arcade/cash-app-logo.png',
+    // Social media icons (fallbacks)
+    twitterIcon: 'https://cash-s.squarecdn.com/static/email/arcade/x.png',
+    instagramIcon: 'https://cash-s.squarecdn.com/static/email/arcade/instagram.png',
+    twitchIcon: 'https://cash-s.squarecdn.com/static/email/arcade/twitch.png',
+    tiktokIcon: 'https://cash-s.squarecdn.com/static/email/arcade/tiktok.png',
     // Chime logo
     chimeLogo: 'https://braze-images.com/appboy/communication/assets/image_assets/images/65cb26e0d78955004bdec58e/original.png',
     // Zelle logo (white horizontal with tagline)
@@ -81,4 +101,42 @@ export function isValidImageUrl(url: string): boolean {
 // Get GitHub raw URL for a given path
 export function getGitHubImageUrl(imagePath: string): string {
   return `${GITHUB_BASE_URL}/${imagePath}`;
+}
+
+// Cash App specific image utilities with fallback support
+export const CASH_APP_IMAGES = {
+  // Logo with fallback
+  logo: {
+    primary: IMAGE_URLS.logos.cashApp,
+    fallback: IMAGE_URLS.external.cashAppLogo,
+  },
+  // Social media icons with fallbacks
+  socialIcons: {
+    twitter: {
+      primary: IMAGE_URLS.social.twitter,
+      fallback: IMAGE_URLS.external.twitterIcon,
+    },
+    instagram: {
+      primary: IMAGE_URLS.social.instagram,
+      fallback: IMAGE_URLS.external.instagramIcon,
+    },
+    twitch: {
+      primary: IMAGE_URLS.social.twitch,
+      fallback: IMAGE_URLS.external.twitchIcon,
+    },
+    tiktok: {
+      primary: IMAGE_URLS.social.tiktok,
+      fallback: IMAGE_URLS.external.tiktokIcon,
+    },
+  },
+};
+
+// Get Cash App logo with fallback
+export function getCashAppLogo(): { primary: string; fallback: string } {
+  return CASH_APP_IMAGES.logo;
+}
+
+// Get Cash App social icon with fallback
+export function getCashAppSocialIcon(platform: 'twitter' | 'instagram' | 'twitch' | 'tiktok'): { primary: string; fallback: string } {
+  return CASH_APP_IMAGES.socialIcons[platform];
 }

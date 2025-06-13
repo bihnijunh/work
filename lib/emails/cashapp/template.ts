@@ -1,10 +1,15 @@
-export const cashAppTemplate = (content: string) => `
+import { getCashAppLogo } from '@/lib/config/images';
+
+export const cashAppTemplate = (content: string) => {
+  const cashAppLogo = getCashAppLogo();
+
+  return `
   <!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chime Support</title>
+    <title>Cash App Support</title>`;
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -20,7 +25,7 @@ export const cashAppTemplate = (content: string) => `
         background-color: #ffffff;
       }
       .header {
-        background-color: #1EC677;
+        background-color: #00D632;
         padding: 20px;
         text-align: center;
       }
@@ -38,14 +43,14 @@ export const cashAppTemplate = (content: string) => `
         margin: 12px 0;
       }
       .privacy-link {
-        color: #1EC677;
+        color: #00D632;
         text-decoration: none;
       }
       .privacy-link:hover {
         text-decoration: underline;
       }
       .status-badge {
-        background-color: #1EC677;
+        background-color: #00D632;
         color: white;
         padding: 8px 16px;
         border-radius: 16px;
@@ -53,7 +58,7 @@ export const cashAppTemplate = (content: string) => `
         margin: 16px 0;
       }
       .cashtag {
-        color: #1EC677;
+        color: #00D632;
         font-weight: 600;
       }
     </style>
@@ -61,22 +66,23 @@ export const cashAppTemplate = (content: string) => `
   <body>
     <div class="container">
       <div class="header">
-        <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/65cb26e0d78955004bdec58e/original.png" alt="Chime" class="logo">
+        <img src="${cashAppLogo.primary}" alt="Cash App" class="logo" onerror="this.src='${cashAppLogo.fallback}'">
       </div>
 
       ${content}
 
       <div class="footer-text">
         <p>
-          <a href="https://www.chime.com/policies/" class="privacy-link">
+          <a href="#" class="privacy-link">
             Privacy Policy
           </a>
         </p>
         <p class="disclaimer">
-          Chime is a financial technology company, not a bank. Banking services are provided by Chime's bank partner(s).
+          Cash App is a service of Block, Inc., 1955 Broadway Street, Suite 600, Oakland, CA 94612. Review licenses.
         </p>
       </div>
     </div>
   </body>
   </html>
 `;
+};
