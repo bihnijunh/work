@@ -1,11 +1,15 @@
 import { PaypalEmailContent } from "@/types/email";
 import { resend, getSenderAddress, wrapEmailContent, EmailResult } from "../utils";
 import { generateOptimizedTelLink, formatPhoneForDisplay } from "@/lib/utils/phone-formatting";
+import { getPayPalLogo } from "@/lib/config/images";
 
 /**
  * Generate HTML content for PayPal email
  */
 export function generatePaypalEmailContent(content: PaypalEmailContent): string {
+  const headerLogo = getPayPalLogo('header');
+  const footerLogo = getPayPalLogo('footer');
+
   return `
     <div style="max-width: 640px; margin: 0 auto; background-color: #FAF8F5;">
       <!-- Header with Logo and Greeting -->
@@ -14,9 +18,10 @@ export function generatePaypalEmailContent(content: PaypalEmailContent): string 
           Hello, ${content.recipientName}
         </p>
         <img
-          src="https://www.paypalobjects.com/digitalassets/c/system-triggered-email/n/layout/images/paypal-rebranding/pp-logo-in-circle-2x.png"
+          src="${headerLogo.primary}"
           alt="PayPal"
           style="width: 63px; height: 63px;"
+          onerror="this.src='${headerLogo.fallback}'"
         />
       </div>
 
@@ -56,9 +61,10 @@ export function generatePaypalEmailContent(content: PaypalEmailContent): string 
       <div style="border-top: 1px solid #e5e7eb;">
         <div style="padding: 16px;">
           <img
-            src="https://www.paypalobjects.com/digitalassets/c/system-triggered-email/n/layout/images/paypal-rebranding/footer-logo-with-crop-2x.png"
+            src="${footerLogo.primary}"
             alt="PayPal"
             style="width: 283px; height: 100px;"
+            onerror="this.src='${footerLogo.fallback}'"
           />
         </div>
 

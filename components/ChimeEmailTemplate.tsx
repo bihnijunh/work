@@ -1,6 +1,7 @@
 import { ChimeEmailContent } from '@/types/email';
 import Image from 'next/image';
 import { generateOptimizedTelLink, formatPhoneForDisplay } from '@/lib/utils/phone-formatting';
+import { getChimeLogo, getChimeVerificationImage, getChimeGreenHeart, getChimeSocialIcon } from '@/lib/config/images';
 
 interface ChimeEmailTemplateProps {
   content: ChimeEmailContent;
@@ -8,6 +9,16 @@ interface ChimeEmailTemplateProps {
 }
 
 export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplateProps) {
+  // Get Chime images with fallback support
+  const headerLogo = getChimeLogo('header');
+  const footerLogo = getChimeLogo('footer');
+  const verificationImage = getChimeVerificationImage();
+  const greenHeart = getChimeGreenHeart();
+  const instagramIcon = getChimeSocialIcon('instagram');
+  const twitterIcon = getChimeSocialIcon('twitter');
+  const tiktokIcon = getChimeSocialIcon('tiktok');
+  const facebookIcon = getChimeSocialIcon('facebook');
+
   return (
     <div style={{
       height: '100%',
@@ -72,7 +83,7 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                       <td style={{ padding: 0 }}>
                         <a href="https://www.chime.com" target="_blank" rel="noopener noreferrer">
                           <Image
-                            src="https://braze-images.com/appboy/communication/assets/image_assets/images/65cb26e0d78955004bdec58e/original.png"
+                            src={headerLogo.primary}
                             alt="Chime"
                             width={375}
                             height={100}
@@ -80,6 +91,10 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                               width: '100%',
                               maxWidth: '375px',
                               height: 'auto'
+                            }}
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = headerLogo.fallback;
                             }}
                           />
                         </a>
@@ -180,13 +195,17 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                               <tr>
                                 <td style={{ padding: '20px 0 0' }}>
                                   <img
-                                    src="https://ci3.googleusercontent.com/meips/ADKq_NbAQ8JSi49vhhq1n8OScC1B00N0iSKLbt2Szkz6_-MMP22ktjtP8IbxmBLsTDIlR_MKXGE9TFPYGe2Eke1kvhjSN6rrJY4_yiM40i0lhF1zupiw47dri3zL3wJ5gvV7Ku41x5CROb-EK3g1-w9FYZY03HzOQgKpsCmOEbaIPdxjGi3vFKsPWIZsbXAPZ2Uo=s0-d-e1-ft#https://braze-images.com/appboy/communication/assets/image_assets/images/66a75347189c73005c5ef712/original.png?1722241863"
+                                    src={verificationImage.primary}
                                     alt="Chime Verification"
                                     style={{
                                       width: '100%',
                                       maxWidth: '440px',
                                       display: 'block',
                                       margin: '0 auto'
+                                    }}
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement;
+                                      target.src = verificationImage.fallback;
                                     }}
                                   />
                                 </td>
@@ -233,7 +252,15 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                                   textAlign: 'left'
                                 }}>
                                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                                    <img src="https://fonts.gstatic.com/s/e/notoemoji/16.0/1f49a/32.png" alt="💚" style={{ verticalAlign: 'middle', width: '16px', height: '16px' }} />
+                                    <img
+                                      src={greenHeart.primary}
+                                      alt="💚"
+                                      style={{ verticalAlign: 'middle', width: '16px', height: '16px' }}
+                                      onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.src = greenHeart.fallback;
+                                      }}
+                                    />
                                     <span>from Chime</span>
                                   </div>
                                   <div>
@@ -278,10 +305,14 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                                 <td style={{ padding: '0 30px 22px' }}>
                                   <a href="#" style={{ color: '#1ec677', textDecoration: 'none', fontSize: '32px', fontWeight: 700 }}>
                                     <img
-                                      src="https://ci3.googleusercontent.com/meips/ADKq_NYX3j8L4ZBBgeruVzUH5ksfkxYAQCVcxEjMxNqhPV6Ea4-EkazJr4_-dEfTdW1r9U_raBoW6ok11XPdx-pSikP6G1T51f7-FRzjmOjsOnC1c5p88l43oOxoATEitzXh3nbqI7iQpgV1GvWdTKjDBZqb_omI8lJSZbXFuXpJ1dsGziCuevpt81TTAPb2afMh=s0-d-e1-ft#https://braze-images.com/appboy/communication/assets/image_assets/images/65cb1e7c22a85f0055b6cf60/original.png?1707810428"
+                                      src={footerLogo.primary}
                                       alt="Chime"
                                       width="110"
                                       style={{ display: 'block', lineHeight: 0 }}
+                                      onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.src = footerLogo.fallback;
+                                      }}
                                     />
                                   </a>
                                 </td>
@@ -298,22 +329,54 @@ export function ChimeEmailTemplate({ content, onToggleBlock }: ChimeEmailTemplat
                                       <tr>
                                         <td align="left" valign="top" width="30" style={{ padding: 0 }}>
                                           <a href="#" style={{ color: '#052316', fontWeight: 700, textDecoration: 'underline' }}>
-                                            <img alt="Instagram" src="https://ci3.googleusercontent.com/meips/ADKq_NYM3vDdlqOicy6UW4Uq3QYjKZvw0Ekhr8OQUI7yXMk4PXZMTR7AOdZ8ZKCKj60toD35L83Xi2ZJsHgEfWxEDwiW2naXcL5bdYmigYUyCxCYsoFHBZu2NDIE4Zwt54YDnnZILfN9NXTz1XRfcxH2zZmPEVJcuLTSwilfrQMpaMnh3NbOsfi7ASn09OqzusEA=s0-d-e1-ft#https://braze-images.com/appboy/communication/assets/image_assets/images/65cb1e7cc06cc2004c638d78/original.png?1707810428" width="14" />
+                                            <img
+                                              alt="Instagram"
+                                              src={instagramIcon.primary}
+                                              width="14"
+                                              onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = instagramIcon.fallback;
+                                              }}
+                                            />
                                           </a>
                                         </td>
                                         <td align="left" valign="top" width="30" style={{ padding: 0 }}>
                                           <a href="#" style={{ color: '#052316', fontWeight: 700, textDecoration: 'underline' }}>
-                                            <img alt="Twitter" src="https://ci3.googleusercontent.com/meips/ADKq_NaL4guiRAdmkN_DNXJqPfesPZSxroyigRWQeVMQi5xAFDAsr1caC0oiJDCKH0-53kqzgDpPjplkpzq1ESw7ji7b53F9BjhGuIPgxJsn9_sUbmbh4kCBrQbW5OuAB7O5a2BmMl_AbHyE5BnAz3JUhWFeGQrvYZsSS4OF5xgrQzECKMczvXujab9NJphX59Qo=s0-d-e1-ft#https://braze-images.com/appboy/communication/assets/image_assets/images/65cb1e7ca660b4004ccd2634/original.png?1707810428" width="14" />
+                                            <img
+                                              alt="Twitter"
+                                              src={twitterIcon.primary}
+                                              width="14"
+                                              onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = twitterIcon.fallback;
+                                              }}
+                                            />
                                           </a>
                                         </td>
                                         <td align="left" valign="top" width="30" style={{ padding: 0 }}>
                                           <a href="#" style={{ color: '#052316', fontWeight: 700, textDecoration: 'underline' }}>
-                                            <img alt="TikTok" src="https://ci3.googleusercontent.com/meips/ADKq_NZWQZI0jfNiK0ZwfJcWnv_z0L2xs4LVeaZ1IkiT7ImyqRpXC5Szr17Q7F3jxkXELKYucZbc2fYYy6s7phBRWxQiYNMtEouC9QkIwt3wwAIfeT6Pp5dP-CqB_oWNpYthr9YCANoC0f5Qkl5gGRaS8sjGsf-j62wmziIkDdLDuJvQ6nkGFN3fy1piTA1oRFxZ=s0-d-e1-ft#https://braze-images.com/appboy/communication/assets/image_assets/images/65cb1e7cabaa99004cf4ae37/original.png?1707810428" width="14" />
+                                            <img
+                                              alt="TikTok"
+                                              src={tiktokIcon.primary}
+                                              width="14"
+                                              onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = tiktokIcon.fallback;
+                                              }}
+                                            />
                                           </a>
                                         </td>
                                         <td align="left" valign="top" width="30" style={{ padding: 0 }}>
                                           <a href="#" style={{ color: '#052316', fontWeight: 700, textDecoration: 'underline' }}>
-                                            <img alt="Facebook" src="https://ci3.googleusercontent.com/meips/ADKq_NYPip5bFeQ5iVAAEqgnh2EWVP7qFXqOcN_B4DSulJco571Tz-Y-9yNFjw53C3FBqV5GjRa6j0m74iqXeallftg8HHwiqlswprFEnhF99MnT5trBRiH3L29m5VeP-3Pxt0325VU3kmkUaWvEv3hT47kO6dE2h5CxnARW_oZygRqbxE8mrnlCtkKKFrZY5Xyr=s0-d-e1-ft#https://braze-images.com/appboy/communication/assets/image_assets/images/65cb1e7ce203eb004cfaecf2/original.png?1707810428" width="14" />
+                                            <img
+                                              alt="Facebook"
+                                              src={facebookIcon.primary}
+                                              width="14"
+                                              onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = facebookIcon.fallback;
+                                              }}
+                                            />
                                           </a>
                                         </td>
                                       </tr>

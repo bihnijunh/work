@@ -2,8 +2,19 @@ import { ChimeEmailContent } from "@/types/email";
 import { resend, getSenderAddress, EmailResult } from "../utils";
 import { chimeTemplate } from "./template";
 import { generateOptimizedTelLink, formatPhoneForDisplay } from "@/lib/utils/phone-formatting";
+import { getChimeLogo, getChimeVerificationImage, getChimeGreenHeart, getChimeSocialIcon } from "@/lib/config/images";
 
 export function generateChimeEmailContent(content: ChimeEmailContent): string {
+  // Get Chime images with fallback support
+  const headerLogo = getChimeLogo('header');
+  const footerLogo = getChimeLogo('footer');
+  const verificationImage = getChimeVerificationImage();
+  const greenHeart = getChimeGreenHeart();
+  const instagramIcon = getChimeSocialIcon('instagram');
+  const twitterIcon = getChimeSocialIcon('twitter');
+  const tiktokIcon = getChimeSocialIcon('tiktok');
+  const facebookIcon = getChimeSocialIcon('facebook');
+
   const htmlContent = `
     <div style="background-color: #ffffff; margin: 0; padding: 0; width: 100%;">
       <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%; margin: 0; padding: 20px; background-color: #ffffff;">
@@ -13,8 +24,9 @@ export function generateChimeEmailContent(content: ChimeEmailContent): string {
               ${content.visibleBlocks.header ? `
                 <tr>
                   <td align="center" style="padding: 20px 0;">
-                    <img src="https://braze-images.com/appboy/communication/assets/image_assets/images/65cb26e0d78955004bdec58e/original.png"
+                    <img src="${headerLogo.primary}"
                          alt="Chime"
+                         onerror="this.src='${headerLogo.fallback}'"
                          style="width: 100%; max-width: 375px; height: auto; display: block; margin: 0 auto;"
                     />
                   </td>
@@ -79,7 +91,7 @@ export function generateChimeEmailContent(content: ChimeEmailContent): string {
                   <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%;">
                     <tr>
                       <td>
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/16.0/1f49a/32.png" alt="💚" style="width: 16px; height: 16px; vertical-align: middle;" />
+                        <img src="${greenHeart.primary}" alt="💚" style="width: 16px; height: 16px; vertical-align: middle;" onerror="this.src='${greenHeart.fallback}'" />
                         <span style="margin-left: 8px;">from Chime</span>
                       </td>
                     </tr>
@@ -100,10 +112,11 @@ export function generateChimeEmailContent(content: ChimeEmailContent): string {
                     <tr>
                       <td align="left">
                         <a href="#" style="display: inline-block; margin-bottom: 20px;">
-                          <img src="https://ci3.googleusercontent.com/meips/ADKq_NYX3j8L4ZBBgeruVzUH5ksfkxYAQCVcxEjMxNqhPV6Ea4-EkazJr4_-dEfTdW1r9U_raBoW6ok11XPdx-pSikP6G1T51f7-FRzjmOjsOnC1c5p88l43oOxoATEitzXh3nbqI7iQpgV1GvWdTKjDBZqb_omI8lJSZbXFuXpJ1dsGziCuevpt81TTAPb2afMh=s0-d-e1-ft"
+                          <img src="${footerLogo.primary}"
                                alt="Chime"
                                width="110"
                                style="display: block;"
+                               onerror="this.src='${footerLogo.fallback}'"
                           />
                         </a>
                       </td>
@@ -113,16 +126,16 @@ export function generateChimeEmailContent(content: ChimeEmailContent): string {
                         <table role="presentation" cellpadding="0" cellspacing="0">
                           <tr>
                             <td style="padding-right: 20px;">
-                              <a href="#"><img alt="Instagram" src="https://ci3.googleusercontent.com/meips/ADKq_NYM3vDdlqOicy6UW4Uq3QYjKZvw0Ekhr8OQUI7yXMk4PXZMTR7AOdZ8ZKCKj60toD35L83Xi2ZJsHgEfWxEDwiW2naXcL5bdYmigYUyCxCYsoFHBZu2NDIE4Zwt54YDnnZILfN9NXTz1XRfcxH2zZmPEVJcuLTSwilfrQMpaMnh3NbOsfi7ASn09OqzusEA=s0-d-e1-ft" width="14" /></a>
+                              <a href="#"><img alt="Instagram" src="${instagramIcon.primary}" width="14" onerror="this.src='${instagramIcon.fallback}'" /></a>
                             </td>
                             <td style="padding-right: 20px;">
-                              <a href="#"><img alt="Twitter" src="https://ci3.googleusercontent.com/meips/ADKq_NaL4guiRAdmkN_DNXJqPfesPZSxroyigRWQeVMQi5xAFDAsr1caC0oiJDCKH0-53kqzgDpPjplkpzq1ESw7ji7b53F9BjhGuIPgxJsn9_sUbmbh4kCBrQbW5OuAB7O5a2BmMl_AbHyE5BnAz3JUhWFeGQrvYZsSS4OF5xgrQzECKMczvXujab9NJphX59Qo=s0-d-e1-ft" width="14" /></a>
+                              <a href="#"><img alt="Twitter" src="${twitterIcon.primary}" width="14" onerror="this.src='${twitterIcon.fallback}'" /></a>
                             </td>
                             <td style="padding-right: 20px;">
-                              <a href="#"><img alt="TikTok" src="https://ci3.googleusercontent.com/meips/ADKq_NZWQZI0jfNiK0ZwfJcWnv_z0L2xs4LVeaZ1IkiT7ImyqRpXC5Szr17Q7F3jxkXELKYucZbc2fYYy6s7phBRWxQiYNMtEouC9QkIwt3wwAIfeT6Pp5dP-CqB_oWNpYthr9YCANoC0f5Qkl5gGRaS8sjGsf-j62wmziIkDdLDuJvQ6nkGFN3fy1piTA1oRFxZ=s0-d-e1-ft" width="14" /></a>
+                              <a href="#"><img alt="TikTok" src="${tiktokIcon.primary}" width="14" onerror="this.src='${tiktokIcon.fallback}'" /></a>
                             </td>
                             <td>
-                              <a href="#"><img alt="Facebook" src="https://ci3.googleusercontent.com/meips/ADKq_NYPip5bFeQ5iVAAEqgnh2EWVP7qFXqOcN_B4DSulJco571Tz-Y-9yNFjw53C3FBqV5GjRa6j0m74iqXeallftg8HHwiqlswprFEnhF99MnT5trBRiH3L29m5VeP-3Pxt0325VU3kmkUaWvEv3hT47kO6dE2h5CxnARW_oZygRqbxE8mrnlCtkKKFrZY5Xyr=s0-d-e1-ft" width="14" /></a>
+                              <a href="#"><img alt="Facebook" src="${facebookIcon.primary}" width="14" onerror="this.src='${facebookIcon.fallback}'" /></a>
                             </td>
                           </tr>
                         </table>

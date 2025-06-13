@@ -2,12 +2,17 @@ import React from 'react';
 import { PaypalEmailContent } from "@/types/email";
 import Image from 'next/image';
 import { generateOptimizedTelLink, formatPhoneForDisplay } from '@/lib/utils/phone-formatting';
+import { getPayPalLogo } from '@/lib/config/images';
 
 interface PaypalEmailTemplateProps {
   content: PaypalEmailContent;
 }
 
 export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
+  // Get PayPal logos with fallback support
+  const headerLogo = getPayPalLogo('header');
+  const footerLogo = getPayPalLogo('footer');
+
   return (
     <div style={{ maxWidth: '640px', margin: '0 auto', fontFamily: 'Arial, sans-serif', backgroundColor: '#FAF8F5' }}>
       {/* Header */}
@@ -20,10 +25,14 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
       {/* PayPal Logo */}
       <div style={{ padding: '16px' }}>
         <Image
-          src="https://www.paypalobjects.com/digitalassets/c/system-triggered-email/n/layout/images/paypal-rebranding/pp-logo-in-circle-2x.png"
+          src={headerLogo.primary}
           alt="PayPal"
           width={63}
           height={63}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = headerLogo.fallback;
+          }}
         />
       </div>
 
@@ -66,10 +75,14 @@ export function PaypalEmailTemplate({ content }: PaypalEmailTemplateProps) {
       <div style={{ borderTop: '1px solid #e5e7eb' }}>
         <div style={{ padding: '16px' }}>
           <Image
-            src="https://www.paypalobjects.com/digitalassets/c/system-triggered-email/n/layout/images/paypal-rebranding/footer-logo-with-crop-2x.png"
+            src={footerLogo.primary}
             alt="PayPal"
             width={283}
             height={100}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = footerLogo.fallback;
+            }}
           />
         </div>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ZelleAdditionalPaymentContent } from "@/types/email";
-import { IMAGE_URLS } from '@/lib/config/images';
+import { getZelleLogo } from '@/lib/config/images';
 import { generateOptimizedTelLink, formatPhoneForDisplay } from '@/lib/utils/phone-formatting';
 
 interface ZelleAdditionalPaymentTemplateProps {
@@ -11,16 +11,23 @@ interface ZelleAdditionalPaymentTemplateProps {
 export function ZelleAdditionalPaymentTemplate({
   content
 }: ZelleAdditionalPaymentTemplateProps) {
+  // Get Zelle logo with fallback support
+  const zelleLogo = getZelleLogo();
+
   return (
     <div className="border dark:border-gray-700 rounded-lg overflow-hidden">
       {/* Header with Zelle Logo */}
       <div className="bg-[#6D1ED4] p-5 text-center">
         <Image
-          src={IMAGE_URLS.external.zelleLogo}
+          src={zelleLogo.primary}
           alt="Zelle"
           width={200}
           height={32}
           className="h-8 mx-auto"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = zelleLogo.fallback;
+          }}
         />
       </div>
 

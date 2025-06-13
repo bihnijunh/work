@@ -1,6 +1,9 @@
-import { IMAGE_URLS } from "@/lib/config/images";
+import { getZelleLogo } from "@/lib/config/images";
 
-export const zelleTemplate = (content: string) => `
+export const zelleTemplate = (content: string) => {
+  const zelleLogo = getZelleLogo();
+
+  return `
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -66,7 +69,7 @@ export const zelleTemplate = (content: string) => `
   <body>
     <div class="container">
       <div class="header">
-        <img src="${IMAGE_URLS.external.zelleLogo}" alt="Zelle" class="logo" style="height: 32px; width: auto; display: block; margin: 0 auto;">
+        <img src="${zelleLogo.primary}" alt="Zelle" class="logo" style="height: 32px; width: auto; display: block; margin: 0 auto;" onerror="this.src='${zelleLogo.fallback}'">
       </div>
 
       ${content}
@@ -114,3 +117,4 @@ export const zelleTemplate = (content: string) => `
   </body>
   </html>
 `;
+};
